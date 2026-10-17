@@ -1,0 +1,18 @@
+# Rust
+/target
+/firmware/target
+**/*.rs.bk
+# Editors / OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
+# Build outputs
+*.uf2
+!docs/**/*.uf2
+
+# Local captures and generated files
+*.mkv
+/retropong-*.png
+node_modules/
+__pycache__/

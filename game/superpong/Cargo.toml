@@ -1,0 +1,19 @@
+[package]
+name = "superpong"
+description = "RetroPong: an Atari Super Pong (model C-140) clone for the RetroController paddles"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[[bin]]
+name = "retropong"
+path = "src/main.rs"
+
+[dependencies]
+superpong-core = { workspace = true }
+retrocontroller-protocol = { workspace = true, features = ["std"] }
+macroquad = { version = "0.4.16", features = ["audio"] }
+hidapi = { workspace = true }
+gilrs = "0.11"
+clap = { version = "4", features = ["derive"] }

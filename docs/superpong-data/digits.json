@@ -1,0 +1,148 @@
+{
+  "_about": "Score digit glyphs of the Atari C-140 (Super Pong). Authoritative data for docs/SPEC-superpong.md section 9. Units: X = console clock column, row = scan line.",
+  "cell": {
+    "width_clocks": 16,
+    "height_lines": 64,
+    "grid_cols": 4,
+    "grid_rows": 8,
+    "grid_cell_width_clocks": 4,
+    "grid_cell_height_lines": 8,
+    "rows_note": "glyph row 0 is the top; in each 4-character string column 0 is the leftmost; '#' = lit grid cell (4 clocks x 8 lines), '.' = dark"
+  },
+  "glyphs": {
+    "0": [
+      "####",
+      "#..#",
+      "#..#",
+      "#..#",
+      "#..#",
+      "#..#",
+      "#..#",
+      "####"
+    ],
+    "1": [
+      "...#",
+      "...#",
+      "...#",
+      "...#",
+      "...#",
+      "...#",
+      "...#",
+      "...#"
+    ],
+    "2": [
+      "####",
+      "...#",
+      "...#",
+      "####",
+      "#...",
+      "#...",
+      "#...",
+      "####"
+    ],
+    "3": [
+      "####",
+      "...#",
+      "...#",
+      "####",
+      "...#",
+      "...#",
+      "...#",
+      "####"
+    ],
+    "4": [
+      "#..#",
+      "#..#",
+      "#..#",
+      "####",
+      "...#",
+      "...#",
+      "...#",
+      "...#"
+    ],
+    "5": [
+      "####",
+      "#...",
+      "#...",
+      "####",
+      "...#",
+      "...#",
+      "...#",
+      "####"
+    ],
+    "6": [
+      "####",
+      "#...",
+      "#...",
+      "####",
+      "#..#",
+      "#..#",
+      "#..#",
+      "####"
+    ],
+    "7": [
+      "####",
+      "...#",
+      "...#",
+      "...#",
+      "...#",
+      "...#",
+      "...#",
+      "...#"
+    ],
+    "8": [
+      "####",
+      "#..#",
+      "#..#",
+      "####",
+      "#..#",
+      "#..#",
+      "#..#",
+      "####"
+    ],
+    "9": [
+      "####",
+      "#..#",
+      "#..#",
+      "####",
+      "...#",
+      "...#",
+      "...#",
+      "####"
+    ]
+  },
+  "tens": {
+    "drawn_for_values": "10..=15 (inclusive)",
+    "shape": "one bar 4 clocks wide x 64 lines tall (the full cell height)",
+    "x_offset_from_units_cell": -16,
+    "units_digit": "value - 10, drawn with the normal glyph"
+  },
+  "positions": {
+    "rows": [
+      32,
+      96
+    ],
+    "left": {
+      "units_x": [
+        40,
+        56
+      ],
+      "tens_x": [
+        24,
+        28
+      ]
+    },
+    "right": {
+      "units_x": [
+        136,
+        152
+      ],
+      "tens_x": [
+        120,
+        124
+      ]
+    },
+    "ranges_are": "half-open [start, end)"
+  },
+  "values": "0..=15; a game ends at 15, so no value above 15 is ever displayed"
+}

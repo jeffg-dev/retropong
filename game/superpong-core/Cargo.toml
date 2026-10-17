@@ -1,0 +1,9 @@
+[package]
+name = "superpong-core"
+description = "Headless, deterministic simulation of the four Atari Super Pong (C-140) games"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]

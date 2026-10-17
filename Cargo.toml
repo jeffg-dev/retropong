@@ -1,0 +1,34 @@
+[workspace]
+resolver = "2"
+members = [
+    "protocol",
+    "firmware/logic",
+    "tools/rcctl",
+    "game/superpong-core",
+    "game/superpong",
+    "game/superpong-web",
+]
+# The firmware is a separate Cargo project (its own target, no_std, custom
+# linker script). Build it with `cargo build --release` inside `firmware/`
+# or via `cargo run -p rcctl -- build`.
+exclude = ["firmware"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+repository = "https://github.com/jeffg-dev/retropong"
+
+[workspace.dependencies]
+retrocontroller-protocol = { path = "protocol" }
+superpong-core = { path = "game/superpong-core" }
+# hidapi is used by both rcctl and superpong. Cargo unifies features across the
+# workspace, and hidapi's build script refuses two Linux backends at once, so
+# every crate must pick the SAME backend: the pure-Rust hidraw backend with
+# basic-udev (no libudev), plus shared (non-exclusive) opens on macOS.
+hidapi = { version = "2.6.7", default-features = false, features = ["linux-native-basic-udev", "macos-shared-device"] }
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 1

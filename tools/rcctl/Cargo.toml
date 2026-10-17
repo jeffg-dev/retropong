@@ -1,0 +1,20 @@
+[package]
+name = "rcctl"
+description = "RetroController host toolkit: build, convert and flash firmware, monitor and calibrate the paddles"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[[bin]]
+name = "rcctl"
+path = "src/main.rs"
+
+[dependencies]
+anyhow = "1.0.104"
+clap = { version = "4.6.7", features = ["derive"] }
+ctrlc = "3.5.2"
+elf = "0.8"
+hidapi = { workspace = true }
+retrocontroller-protocol = { workspace = true, features = ["std"] }
+serialport = { version = "4", default-features = false }

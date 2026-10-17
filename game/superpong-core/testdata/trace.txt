@@ -1,0 +1,2297 @@
+# Differential trace from the spec mirror; see tests.rs `differential_trace`.
+run 3 9e3779b97f4a7c15 40000
+419 Serve
+500 S Rally 3 0 0 0 107 99 168 115 1 -1
+507 Point
+647 Serve
+654 Bounce(Paddle)
+729 Bounce(Paddle)
+747 Bounce(Border)
+804 Bounce(Paddle)
+899 Point
+1000 S Waiting 3 1 1 0 197 184 125 186 -1 0
+1035 Serve
+1106 Bounce(Paddle)
+1250 Bounce(Paddle)
+1414 Point
+1500 S Waiting 3 1 2 0 54 47 140 42 -1 0
+1550 Serve
+1557 Bounce(Paddle)
+1612 Bounce(Border)
+1649 Point
+1789 Serve
+1796 Bounce(Paddle)
+1891 Point
+2000 S Waiting 3 2 3 0 90 97 117 110 -1 0
+2000 F 3080645499a4b935
+2027 Serve
+2118 Point
+2254 Serve
+2325 Bounce(Paddle)
+2420 Bounce(Border)
+2464 Bounce(Wall)
+2486 Bounce(Border)
+2500 S Rally 2 2 4 2 42 15 122 43 -1 2
+2581 Bounce(Border)
+2623 Point
+2759 Serve
+2771 Bounce(Border)
+2830 Bounce(Paddle)
+2854 Bounce(Border)
+2918 Bounce(Border)
+2982 Bounce(Border)
+2986 Point
+3000 S Waiting 2 3 5 0 24 25 189 69 1 3
+3126 Serve
+3174 Bounce(Border)
+3197 Bounce(Wall)
+3336 Bounce(Paddle)
+3459 Bounce(Border)
+3475 Bounce(Wall)
+3481 Bounce(Border)
+3500 S Rally 2 3 5 3 72 69 133 70 -1 3
+3545 Bounce(Border)
+3609 Bounce(Border)
+3634 Point
+3770 Serve
+3825 Bounce(Border)
+3841 Bounce(Paddle)
+3889 Bounce(Border)
+3953 Bounce(Border)
+3997 Point
+4000 S Waiting 2 4 6 0 155 151 178 155 1 3
+4000 F 1f05c3b5f6d1719d
+4137 Serve
+4169 Bounce(Border)
+4208 Bounce(Wall)
+4247 Bounce(Border)
+4311 Bounce(Border)
+4347 Bounce(Paddle)
+4453 Bounce(Border)
+4500 S Rally 2 4 6 2 154 133 172 158 1 -1
+4503 Point
+4643 Serve
+4714 Bounce(Wall)
+4738 Bounce(Border)
+4802 Bounce(Border)
+4866 Bounce(Border)
+4873 Point
+5000 S Waiting 2 5 7 0 36 9 99 32 -1 3
+5009 Serve
+5058 Bounce(Border)
+5080 Bounce(Paddle)
+5102 Bounce(Border)
+5166 Bounce(Border)
+5219 Bounce(Wall)
+5251 Bounce(Border)
+5378 Point
+5500 S Waiting 2 5 8 0 58 77 104 74 -1 1
+5514 Serve
+5585 Bounce(Paddle)
+5601 Bounce(Border)
+5665 Bounce(Border)
+5724 Bounce(Wall)
+5731 Bounce(Border)
+5827 Bounce(Border)
+5863 Bounce(Paddle)
+5934 Bounce(Border)
+6000 S Rally 2 5 8 3 71 83 156 81 1 1
+6000 F 82b25daaeef00555
+6002 Bounce(Wall)
+6025 Bounce(Border)
+6082 Point
+6217 Serve
+6241 Bounce(Border)
+6288 Bounce(Paddle)
+6359 Bounce(Border)
+6444 Point
+6500 S Waiting 2 6 9 0 182 190 3 33 1 2
+6584 Serve
+6586 Bounce(Border)
+6655 Bounce(Wall)
+6701 Bounce(Border)
+6765 Bounce(Border)
+6814 Point
+6950 Serve
+6981 Bounce(Border)
+7000 S Rally 2 6 10 0 75 49 40 71 -1 3
+7041 Point
+7177 Serve
+7197 Bounce(Border)
+7248 Bounce(Paddle)
+7299 Bounce(Border)
+7363 Bounce(Border)
+7387 Bounce(Wall)
+7447 Bounce(Border)
+7500 S Rally 2 6 11 2 131 109 45 121 -1 2
+7526 Bounce(Paddle)
+7579 Bounce(Border)
+7643 Bounce(Border)
+7682 Point
+7822 Serve
+7859 Bounce(Border)
+7893 Bounce(Wall)
+7923 Bounce(Border)
+7987 Bounce(Border)
+8000 S Rally 2 7 11 1 183 150 51 166 -1 -3
+8000 F 64b9d2dc96475a39
+8051 Bounce(Border)
+8052 Point
+8188 Serve
+8243 Bounce(Border)
+8279 Point
+8415 Serve
+8458 Bounce(Border)
+8486 Bounce(Paddle)
+8500 S Rally 2 7 13 1 91 86 33 95 1 -2
+8540 Bounce(Border)
+8635 Bounce(Border)
+8642 Point
+8782 Serve
+8825 Bounce(Border)
+8853 Bounce(Paddle)
+8881 Bounce(Border)
+8928 Bounce(Paddle)
+9000 S Rally 3 8 13 2 34 34 155 39 1 -1
+9003 Bounce(Paddle)
+9024 Bounce(Border)
+9162 Point
+9298 Serve
+9369 Bounce(Paddle)
+9404 Bounce(Border)
+9500 S Rally 3 8 14 1 104 123 150 111 1 1
+9513 Bounce(Paddle)
+9677 Point
+9897 Serve
+9904 Bounce(Paddle)
+9915 Bounce(Paddle)
+9926 Bounce(Paddle)
+10000 S Rally 3 0 0 3 87 71 20 97 -1 0
+10000 F 35df4ace020070ad
+10001 Bounce(Paddle)
+10079 Point
+10219 Serve
+10307 Point
+10447 Serve
+10500 S Rally 3 2 0 0 72 59 140 77 1 -1
+10535 Point
+10675 Serve
+10746 Bounce(Paddle)
+10786 Bounce(Border)
+10882 Bounce(Border)
+10905 Point
+11000 S Waiting 3 3 1 0 174 151 131 58 -1 2
+11041 Serve
+11074 Bounce(Border)
+11132 Point
+11268 Serve
+11275 Bounce(Paddle)
+11286 Bounce(Paddle)
+11304 Bounce(Border)
+11368 Bounce(Border)
+11381 Point
+11500 S Waiting 3 3 3 0 181 180 107 193 -1 -3
+11517 Serve
+11524 Bounce(Paddle)
+11535 Bounce(Paddle)
+11560 Bounce(Border)
+11624 Bounce(Border)
+11630 Point
+11766 Serve
+11773 Bounce(Paddle)
+11784 Bounce(Paddle)
+11795 Bounce(Paddle)
+11806 Bounce(Paddle)
+11812 Bounce(Paddle)
+11818 Bounce(Paddle)
+11824 Bounce(Paddle)
+11871 Point
+12000 S Waiting 3 4 4 0 122 139 77 131 1 0
+12000 F 93c5f368d3ad04b5
+12010 Serve
+12017 Bounce(Paddle)
+12075 Bounce(Border)
+12092 Bounce(Paddle)
+12126 Bounce(Border)
+12248 Point
+12388 Serve
+12476 Point
+12500 S Waiting 3 6 4 0 46 56 199 21 1 -1
+12616 Serve
+12623 Bounce(Paddle)
+12718 Point
+12854 Serve
+12861 Bounce(Paddle)
+12872 Bounce(Paddle)
+12928 Bounce(Border)
+12947 Bounce(Paddle)
+12992 Bounce(Border)
+13000 S Rally 3 6 5 3 170 168 72 183 1 -3
+13024 Bounce(Paddle)
+13031 Bounce(Paddle)
+13037 Bounce(Paddle)
+13085 Point
+13220 Serve
+13227 Bounce(Paddle)
+13238 Bounce(Paddle)
+13261 Bounce(Border)
+13313 Bounce(Paddle)
+13388 Bounce(Paddle)
+13436 Point
+13500 S Waiting 3 6 7 0 36 31 161 96 -1 -3
+13571 Serve
+13591 Bounce(Border)
+13655 Bounce(Border)
+13662 Point
+13798 Serve
+13847 Bounce(Border)
+13889 Point
+14000 S Waiting 3 6 9 0 97 81 115 17 -1 3
+14000 F 65731ebed5d63515
+14025 Serve
+14063 Bounce(Border)
+14116 Point
+14252 Serve
+14259 Bounce(Paddle)
+14303 Bounce(Border)
+14334 Bounce(Paddle)
+14365 Bounce(Border)
+14429 Bounce(Border)
+14493 Point
+14500 S Waiting 3 6 11 0 30 0 -8 -8 -1 -3
+14629 Serve
+14644 Bounce(Border)
+14708 Bounce(Border)
+14720 Point
+14856 Serve
+14863 Bounce(Paddle)
+14874 Bounce(Paddle)
+14885 Bounce(Paddle)
+14898 Bounce(Border)
+14899 Bounce(Paddle)
+14900 Bounce(Border)
+14906 Bounce(Paddle)
+14912 Bounce(Paddle)
+14916 Bounce(Border)
+14918 Bounce(Paddle)
+14924 Bounce(Paddle)
+14926 Bounce(Border)
+14928 Bounce(Paddle)
+14932 Bounce(Paddle)
+14934 Bounce(Border)
+14936 Bounce(Paddle)
+14940 Bounce(Paddle)
+14942 Bounce(Border)
+14944 Bounce(Paddle)
+14975 Point
+15000 S Waiting 3 7 12 0 13 0 201 20 1 0
+15114 Serve
+15121 Bounce(Paddle)
+15123 Bounce(Border)
+15187 Bounce(Border)
+15196 Bounce(Paddle)
+15251 Bounce(Border)
+15315 Bounce(Border)
+15352 Point
+15492 Serve
+15499 Bounce(Paddle)
+15500 S Rally 3 8 12 1 115 103 93 109 -1 0
+15594 Point
+15730 Serve
+15821 Point
+15957 Serve
+16000 S Rally 3 8 14 0 100 100 47 109 -1 0
+16000 F 0a0ced630d92e69d
+16048 Point
+16131 AttractTick
+16407 Serve
+16495 Point
+16500 S Waiting 3 1 0 0 91 124 180 115 1 0
+16635 Serve
+16642 Bounce(Paddle)
+16717 Bounce(Paddle)
+16726 Bounce(Border)
+16790 Bounce(Border)
+16854 Bounce(Border)
+16856 Bounce(Paddle)
+16931 Bounce(Paddle)
+16937 Bounce(Paddle)
+16943 Bounce(Paddle)
+16989 Point
+17000 S Waiting 3 2 0 0 101 69 186 88 1 0
+17129 Serve
+17200 Bounce(Paddle)
+17275 Bounce(Paddle)
+17367 Point
+17500 S Waiting 3 3 0 0 193 162 80 50 1 1
+17507 Serve
+17514 Bounce(Paddle)
+17589 Bounce(Paddle)
+17622 Bounce(Border)
+17717 Bounce(Border)
+17731 Bounce(Paddle)
+17759 Bounce(Border)
+17893 Point
+18000 S Waiting 3 3 1 0 122 145 119 154 -1 -1
+18000 F 38681a2816fa8935
+18029 Serve
+18036 Bounce(Paddle)
+18111 Bounce(Paddle)
+18146 Bounce(Border)
+18186 Bounce(Paddle)
+18226 Bounce(Border)
+18261 Bounce(Paddle)
+18341 Point
+18476 Serve
+18483 Bounce(Paddle)
+18494 Bounce(Paddle)
+18500 S Rally 3 3 2 2 33 52 88 48 -1 -3
+18511 Bounce(Border)
+18575 Bounce(Border)
+18589 Point
+18725 Serve
+18732 Bounce(Paddle)
+18743 Bounce(Paddle)
+18754 Bounce(Paddle)
+18765 Bounce(Paddle)
+18771 Bounce(Paddle)
+18778 Bounce(Paddle)
+18819 Bounce(Border)
+18827 Point
+18962 Serve
+18969 Bounce(Paddle)
+19000 S Rally 3 3 4 1 74 78 114 79 1 0
+19061 Point
+19201 Serve
+19272 Bounce(Paddle)
+19314 Bounce(Border)
+19378 Bounce(Border)
+19431 Point
+19500 S Waiting 4 4 5 0 158 168 157 116 -1 3
+19567 Serve
+19594 Bounce(Border)
+19638 Bounce(Paddle)
+19697 Bounce(Border)
+19794 Point
+19934 Serve
+20000 S Rally 4 5 5 0 130 118 153 128 1 1
+20000 F db0b4af26d214d85
+20005 Bounce(Paddle)
+20077 Bounce(Border)
+20164 Point
+20300 Serve
+20391 Point
+20500 S Waiting 4 5 7 0 134 145 117 162 -1 -1
+20527 Serve
+20598 Bounce(Paddle)
+20739 Bounce(Border)
+20754 Point
+20894 Serve
+20929 Bounce(Border)
+20965 Bounce(Paddle)
+21000 S Rally 4 6 7 1 112 122 123 121 -1 2
+21042 Bounce(Border)
+21124 Point
+21260 Serve
+21269 Bounce(Border)
+21331 Bounce(Paddle)
+21393 Bounce(Border)
+21470 Bounce(Paddle)
+21483 Bounce(Border)
+21500 S Rally 4 6 8 2 140 153 128 156 -1 -3
+21547 Bounce(Border)
+21611 Bounce(Border)
+21611 Bounce(Paddle)
+21675 Bounce(Border)
+21739 Bounce(Border)
+21752 Bounce(Paddle)
+21832 Point
+21967 Serve
+22000 S Rally 4 6 9 0 145 182 57 168 -1 0
+22000 F ffa2392d969af94d
+22058 Point
+22194 Serve
+22265 Bounce(Paddle)
+22404 Bounce(Paddle)
+22500 S Rally 4 6 10 2 80 66 62 72 -1 -1
+22543 Bounce(Paddle)
+22548 Bounce(Border)
+22612 Bounce(Border)
+22676 Bounce(Border)
+22682 Bounce(Paddle)
+22691 Bounce(Border)
+22762 Point
+22897 Serve
+22918 Bounce(Border)
+22988 Point
+23000 S Waiting 4 6 12 0 52 60 -13 41 -1 -2
+23124 Serve
+23145 Bounce(Border)
+23195 Bounce(Paddle)
+23228 Bounce(Border)
+23292 Bounce(Border)
+23351 Point
+23491 Serve
+23500 S Rally 4 7 12 0 167 180 96 182 1 3
+23508 Bounce(Border)
+23572 Bounce(Border)
+23579 Point
+23719 Serve
+23764 Bounce(Border)
+23807 Point
+23947 Serve
+23980 Bounce(Border)
+24000 S Rally 4 9 12 0 133 159 140 145 1 -3
+24000 F da648eba08edd7c5
+24035 Point
+24175 Serve
+24195 Bounce(Border)
+24259 Bounce(Border)
+24263 Point
+24403 Serve
+24451 Bounce(Border)
+24474 Bounce(Paddle)
+24500 S Rally 4 11 12 1 129 127 132 138 -1 0
+24613 Bounce(Paddle)
+24736 Bounce(Border)
+24752 Bounce(Wall)
+24758 Bounce(Border)
+24822 Bounce(Border)
+24886 Bounce(Border)
+24891 Bounce(Wall)
+24896 Bounce(Border)
+24960 Bounce(Border)
+24961 Bounce(Wall)
+24962 Bounce(Border)
+25000 S Rally 1 11 12 5 93 71 81 91 -1 -3
+25026 Bounce(Border)
+25041 Point
+25177 Serve
+25222 Bounce(Border)
+25248 Bounce(Wall)
+25274 Bounce(Border)
+25338 Bounce(Border)
+25387 Bounce(Wall)
+25402 Bounce(Border)
+25466 Bounce(Border)
+25500 S Rally 1 12 12 2 113 115 45 115 -1 3
+25530 Bounce(Border)
+25531 Bounce(Wall)
+25594 Bounce(Border)
+25658 Bounce(Border)
+25675 Bounce(Wall)
+25692 Bounce(Border)
+25745 Bounce(Wall)
+25756 Bounce(Border)
+25815 Bounce(Wall)
+25820 Bounce(Border)
+25884 Bounce(Border)
+25885 Bounce(Wall)
+25948 Bounce(Border)
+25955 Bounce(Wall)
+25962 Bounce(Border)
+26000 S Rally 1 12 12 8 105 71 23 91 -1 -3
+26000 F b484150bfadb44e5
+26002 Bounce(Wall)
+26026 Bounce(Border)
+26049 Bounce(Wall)
+26090 Bounce(Border)
+26102 Point
+26238 Serve
+26282 Bounce(Border)
+26309 Bounce(Wall)
+26336 Bounce(Border)
+26400 Bounce(Border)
+26448 Bounce(Wall)
+26496 Bounce(Border)
+26500 S Rally 1 13 12 2 200 175 106 193 -1 -3
+26560 Bounce(Border)
+26587 Bounce(Wall)
+26614 Bounce(Border)
+26678 Bounce(Border)
+26726 Bounce(Wall)
+26774 Bounce(Border)
+26796 Bounce(Wall)
+26818 Bounce(Border)
+26866 Bounce(Wall)
+26882 Bounce(Border)
+26946 Point
+27000 S Waiting 1 14 12 0 196 192 171 104 -1 3
+27081 Serve
+27098 Bounce(Border)
+27152 Bounce(Wall)
+27162 Bounce(Border)
+27226 Bounce(Border)
+27290 Bounce(Border)
+27291 Bounce(Wall)
+27354 Bounce(Border)
+27418 Bounce(Border)
+27430 Bounce(Wall)
+27482 Bounce(Border)
+27500 S Rally 1 14 12 3 53 43 89 68 1 3
+27546 Bounce(Border)
+27569 Bounce(Wall)
+27592 Bounce(Border)
+27639 Bounce(Wall)
+27686 Bounce(Border)
+27709 Bounce(Wall)
+27750 Bounce(Border)
+27789 Point
+28000 S Waiting 1 0 0 0 125 129 64 26 1 -3
+28000 F 345a90a9a2ffb64d
+28023 Serve
+28068 Bounce(Border)
+28094 Bounce(Wall)
+28207 Bounce(Border)
+28253 Point
+28389 Serve
+28397 Bounce(Border)
+28480 Point
+28500 S Waiting 2 0 2 0 136 99 -21 102 -1 -1
+28616 Serve
+28687 Bounce(Paddle)
+28717 Bounce(Border)
+28781 Bounce(Border)
+28826 Bounce(Paddle)
+28855 Bounce(Border)
+28951 Bounce(Border)
+28985 Point
+29000 S Waiting 4 0 3 0 91 66 -16 112 -1 2
+29121 Serve
+29143 Bounce(Border)
+29212 Point
+29348 Serve
+29370 Bounce(Border)
+29439 Point
+29500 S Waiting 4 0 5 0 83 61 165 208 -1 -2
+29575 Serve
+29597 Bounce(Border)
+29646 Bounce(Wall)
+29679 Bounce(Border)
+29743 Bounce(Border)
+29785 Bounce(Wall)
+29807 Bounce(Border)
+29871 Bounce(Border)
+29935 Bounce(Border)
+29944 Point
+30000 S Waiting 1 1 5 0 27 44 170 202 -1 -3
+30000 F 5041ae90feaad625
+30080 Serve
+30127 Bounce(Border)
+30151 Bounce(Wall)
+30175 Bounce(Border)
+30239 Bounce(Border)
+30290 Bounce(Wall)
+30303 Bounce(Border)
+30367 Bounce(Border)
+30429 Bounce(Wall)
+30431 Bounce(Border)
+30495 Bounce(Border)
+30500 S Rally 1 1 5 3 28 4 90 28 1 3
+30559 Bounce(Border)
+30585 Point
+30725 Serve
+30774 Bounce(Border)
+30796 Bounce(Wall)
+30818 Bounce(Border)
+30882 Bounce(Border)
+30935 Bounce(Wall)
+30946 Bounce(Border)
+31000 S Rally 1 1 6 2 33 28 84 45 1 -3
+31010 Bounce(Border)
+31074 Bounce(Border)
+31074 Bounce(Wall)
+31138 Bounce(Border)
+31202 Bounce(Border)
+31213 Bounce(Wall)
+31224 Bounce(Border)
+31288 Bounce(Border)
+31291 Point
+31431 Serve
+31480 Bounce(Border)
+31500 S Rally 1 1 7 0 146 137 156 147 1 -3
+31519 Point
+31659 Serve
+31696 Bounce(Border)
+31730 Bounce(Wall)
+31760 Bounce(Border)
+31824 Bounce(Border)
+31888 Bounce(Border)
+31889 Point
+32000 S Waiting 2 1 9 0 16 13 115 62 -1 -3
+32000 F 7cbd49f9594f1f25
+32025 Serve
+32080 Bounce(Border)
+32116 Point
+32252 Serve
+32296 Bounce(Border)
+32343 Point
+32479 Serve
+32500 S Rally 2 1 11 0 153 180 69 174 -1 3
+32511 Bounce(Border)
+32570 Point
+32706 Serve
+32727 Bounce(Border)
+32777 Bounce(Paddle)
+32791 Bounce(Border)
+32855 Bounce(Border)
+32916 Bounce(Wall)
+32919 Bounce(Border)
+32983 Bounce(Border)
+33000 S Rally 2 1 12 2 162 166 74 155 -1 -3
+33047 Bounce(Border)
+33075 Point
+33211 Serve
+33263 Bounce(Border)
+33302 Point
+33438 Serve
+33478 Bounce(Border)
+33500 S Rally 2 1 14 0 55 63 28 79 -1 3
+33529 Point
+33812 Serve
+33860 Bounce(Border)
+33883 Bounce(Wall)
+34000 S Rally 2 0 0 1 185 180 41 199 -1 1
+34000 F 592bf939d1e12c39
+34006 Bounce(Border)
+34022 Bounce(Paddle)
+34161 Bounce(Wall)
+34219 Bounce(Border)
+34283 Bounce(Border)
+34320 Point
+34456 Serve
+34499 Bounce(Border)
+34500 S Rally 2 0 1 0 194 209 46 203 -1 -3
+34527 Bounce(Paddle)
+34569 Bounce(Border)
+34665 Bounce(Border)
+34683 Point
+34823 Serve
+34857 Bounce(Border)
+34911 Point
+35000 S Waiting 2 2 1 0 113 96 36 37 1 2
+35051 Serve
+35084 Bounce(Border)
+35122 Bounce(Wall)
+35179 Bounce(Border)
+35274 Bounce(Border)
+35281 Point
+35417 Serve
+35464 Bounce(Border)
+35488 Bounce(Paddle)
+35500 S Rally 2 2 2 1 130 142 31 133 1 -2
+35559 Bounce(Border)
+35627 Bounce(Wall)
+35673 Bounce(Border)
+35737 Bounce(Border)
+35786 Point
+35922 Serve
+35952 Bounce(Border)
+35993 Bounce(Paddle)
+36000 S Rally 2 2 3 1 62 63 26 63 1 -3
+36000 F 3e213e4b9298a5cd
+36016 Bounce(Border)
+36080 Bounce(Border)
+36132 Bounce(Wall)
+36144 Bounce(Border)
+36208 Bounce(Border)
+36271 Bounce(Paddle)
+36272 Bounce(Border)
+36336 Bounce(Border)
+36400 Bounce(Border)
+36410 Bounce(Wall)
+36490 Point
+36500 S Waiting 2 2 4 0 19 31 -12 45 -1 0
+36625 Serve
+36696 Bounce(Paddle)
+36706 Bounce(Border)
+36770 Bounce(Border)
+36834 Bounce(Border)
+36835 Bounce(Wall)
+36837 Bounce(Border)
+36933 Bounce(Border)
+36974 Bounce(Paddle)
+37000 S Rally 2 2 4 3 183 188 45 202 1 3
+37001 Bounce(Border)
+37065 Bounce(Border)
+37113 Bounce(Wall)
+37137 Bounce(Border)
+37193 Point
+37328 Serve
+37364 Bounce(Border)
+37419 Point
+37500 S Waiting 2 2 6 0 125 130 145 23 -1 2
+37555 Serve
+37591 Bounce(Border)
+37626 Bounce(Paddle)
+37770 Bounce(Wall)
+37810 Bounce(Border)
+37874 Bounce(Border)
+37914 Bounce(Paddle)
+37950 Bounce(Border)
+38000 S Rally 2 2 6 3 124 119 105 115 1 2
+38000 F bc1d284cce29427d
+38045 Bounce(Border)
+38070 Point
+38210 Serve
+38235 Bounce(Border)
+38281 Bounce(Wall)
+38327 Bounce(Border)
+38422 Bounce(Border)
+38440 Point
+38500 S Waiting 2 3 7 0 30 54 166 171 -1 2
+38576 Serve
+38612 Bounce(Border)
+38667 Point
+38803 Serve
+38839 Bounce(Border)
+38874 Bounce(Paddle)
+38909 Bounce(Border)
+39000 S Rally 2 3 8 1 27 33 145 24 1 -2
+39005 Bounce(Border)
+39030 Point
+39170 Serve
+39197 Bounce(Border)
+39241 Bounce(Wall)
+39344 Bounce(Border)
+39400 Point
+39500 S Waiting 2 4 9 0 154 127 126 49 -1 -1
+39536 Serve
+39607 Bounce(Paddle)
+39632 Bounce(Border)
+39696 Bounce(Border)
+39760 Bounce(Border)
+39763 Point
+39903 Serve
+39952 Bounce(Border)
+39974 Bounce(Wall)
+40000 S Rally 2 5 9 1 102 83 132 87 -1 -2
+40000 F b2232366c455f3bd
+run 1 0123456789abcdef 40000
+218 AttractTick
+446 AttractTick
+500 S Waiting 1 0 0 0 105 105 114 115 1 -1
+701 Serve
+789 Point
+929 Serve
+1000 Bounce(Wall)
+1000 S Rally 1 0 1 1 99 99 158 124 -1 3
+1027 Bounce(Border)
+1091 Bounce(Border)
+1155 Bounce(Border)
+1159 Point
+1295 Serve
+1347 Bounce(Border)
+1386 Point
+1500 S Waiting 1 2 1 0 127 136 112 203 -1 -3
+1522 Serve
+1563 Bounce(Border)
+1593 Bounce(Wall)
+1627 Bounce(Border)
+1691 Bounce(Border)
+1732 Bounce(Wall)
+1755 Bounce(Border)
+1819 Bounce(Border)
+1883 Bounce(Border)
+1891 Point
+2000 S Waiting 4 3 1 0 179 168 117 173 -1 3
+2000 F dcd210310cdb58f5
+2027 Serve
+2075 Bounce(Border)
+2118 Point
+2254 Serve
+2291 Bounce(Border)
+2345 Point
+2481 Serve
+2500 S Rally 4 3 3 0 32 15 71 31 -1 -3
+2506 Bounce(Border)
+2552 Bounce(Paddle)
+2688 Bounce(Border)
+2708 Point
+2848 Serve
+2878 Bounce(Border)
+2919 Bounce(Paddle)
+3000 S Rally 4 4 3 1 173 154 77 164 -1 0
+3078 Point
+3214 Serve
+3305 Point
+3441 Serve
+3500 S Rally 4 4 5 0 148 142 31 164 -1 0
+3532 Point
+3668 Serve
+3759 Point
+3895 Serve
+3986 Point
+4000 S Waiting 4 4 8 0 142 138 -15 164 -1 0
+4000 F 83399865dfa4785d
+4122 Serve
+4193 Bounce(Paddle)
+4243 Bounce(Border)
+4307 Bounce(Border)
+4349 Point
+4489 Serve
+4500 S Rally 4 5 8 0 112 110 98 136 1 3
+4523 Bounce(Border)
+4577 Point
+4717 Serve
+4738 Bounce(Border)
+4802 Bounce(Border)
+4805 Point
+4945 Serve
+4994 Bounce(Border)
+5000 S Rally 4 7 8 0 176 166 142 189 1 -3
+5016 Bounce(Paddle)
+5058 Bounce(Border)
+5122 Bounce(Border)
+5155 Bounce(Paddle)
+5294 Bounce(Paddle)
+5391 Bounce(Border)
+5433 Bounce(Paddle)
+5500 S Rally 4 7 8 4 151 177 153 163 1 0
+5511 Point
+5651 Serve
+5722 Bounce(Paddle)
+5772 Bounce(Border)
+5836 Bounce(Border)
+5861 Bounce(Paddle)
+5919 Bounce(Border)
+6000 Bounce(Paddle)
+6000 S Rally 4 8 8 3 162 172 158 176 -1 -1
+6000 F 22c751e7dad7ca55
+6139 Bounce(Paddle)
+6150 Bounce(Border)
+6217 Point
+6357 Serve
+6377 Bounce(Border)
+6428 Bounce(Paddle)
+6500 S Rally 4 9 8 1 46 16 86 32 -1 -1
+6517 Bounce(Border)
+6587 Point
+6723 Serve
+6814 Point
+6950 Serve
+7000 S Rally 4 9 10 0 104 123 40 118 -1 1
+7021 Bounce(Paddle)
+7043 Bounce(Border)
+7107 Bounce(Border)
+7171 Bounce(Border)
+7177 Point
+7317 Serve
+7363 Bounce(Border)
+7388 Bounce(Wall)
+7427 Bounce(Border)
+7491 Bounce(Border)
+7500 S Rally 1 10 10 1 38 47 46 40 -1 3
+7547 Point
+7683 Serve
+7707 Bounce(Border)
+7771 Bounce(Border)
+7774 Point
+7910 Serve
+7963 Bounce(Border)
+7981 Bounce(Wall)
+8000 S Rally 1 12 10 1 110 125 38 125 1 3
+8000 F 3d95ab40b69a4ccd
+8027 Bounce(Border)
+8091 Bounce(Border)
+8120 Bounce(Wall)
+8155 Bounce(Border)
+8219 Bounce(Border)
+8259 Bounce(Wall)
+8299 Bounce(Border)
+8363 Bounce(Border)
+8398 Bounce(Wall)
+8427 Bounce(Border)
+8468 Bounce(Wall)
+8500 S Rally 1 12 10 5 58 54 82 41 1 -3
+8509 Bounce(Border)
+8538 Bounce(Wall)
+8573 Bounce(Border)
+8618 Point
+8753 Serve
+8789 Bounce(Border)
+8824 Bounce(Wall)
+8853 Bounce(Border)
+8917 Bounce(Border)
+8963 Bounce(Wall)
+9000 S Rally 1 13 10 2 187 152 121 178 -1 3
+9009 Bounce(Border)
+9073 Bounce(Border)
+9102 Bounce(Wall)
+9131 Bounce(Border)
+9195 Bounce(Border)
+9258 Point
+9398 Serve
+9410 Bounce(Border)
+9469 Bounce(Wall)
+9474 Bounce(Border)
+9500 S Rally 1 13 11 1 102 94 127 93 -1 3
+9538 Bounce(Border)
+9602 Bounce(Border)
+9608 Bounce(Paddle)
+9614 Bounce(Border)
+9678 Bounce(Border)
+9742 Bounce(Border)
+9747 Bounce(Wall)
+9886 Bounce(Paddle)
+9904 Bounce(Border)
+9956 Bounce(Wall)
+10000 S Rally 2 13 11 5 113 76 71 101 -1 0
+10000 F f0e9640f43616a89
+10036 Point
+10172 Serve
+10243 Bounce(Paddle)
+10382 Bounce(Wall)
+10500 S Rally 2 13 12 2 92 114 40 101 -1 0
+10521 Bounce(Paddle)
+10660 Bounce(Wall)
+10740 Point
+10875 Serve
+10966 Point
+11000 S Waiting 3 13 14 0 129 129 192 178 -1 1
+11102 Serve
+11193 Point
+11446 Serve
+11500 S Rally 3 0 0 0 133 94 141 118 1 -1
+11534 Point
+11674 Serve
+11681 Bounce(Paddle)
+11737 Bounce(Border)
+11776 Point
+11912 Serve
+11927 Bounce(Border)
+11983 Bounce(Paddle)
+12000 S Rally 3 1 1 1 84 102 36 93 1 0
+12000 F 7451eb85b13a905d
+12122 Bounce(Paddle)
+12161 Bounce(Border)
+12197 Bounce(Paddle)
+12208 Bounce(Paddle)
+12221 Bounce(Border)
+12246 Bounce(Paddle)
+12271 Bounce(Border)
+12316 Bounce(Paddle)
+12354 Bounce(Paddle)
+12360 Bounce(Paddle)
+12364 Bounce(Paddle)
+12389 Bounce(Border)
+12390 Bounce(Paddle)
+12416 Bounce(Paddle)
+12417 Bounce(Border)
+12420 Bounce(Paddle)
+12424 Bounce(Paddle)
+12428 Bounce(Paddle)
+12432 Bounce(Paddle)
+12435 Bounce(Border)
+12436 Bounce(Paddle)
+12440 Bounce(Paddle)
+12444 Bounce(Paddle)
+12448 Bounce(Paddle)
+12452 Bounce(Paddle)
+12456 Bounce(Paddle)
+12460 Bounce(Paddle)
+12464 Bounce(Paddle)
+12468 Bounce(Paddle)
+12472 Bounce(Paddle)
+12476 Bounce(Paddle)
+12480 Bounce(Paddle)
+12500 S Rally 3 1 1 27 13 0 142 20 1 0
+12511 Point
+12651 Serve
+12739 Point
+12879 Serve
+12886 Bounce(Paddle)
+12948 Bounce(Border)
+12961 Bounce(Paddle)
+13000 S Rally 3 3 1 2 163 145 58 167 1 0
+13117 Point
+13257 Serve
+13328 Bounce(Wall)
+13404 Bounce(Border)
+13487 Point
+13500 S Waiting 2 4 2 0 160 171 -14 207 -1 2
+13623 Serve
+13631 Bounce(Border)
+13694 Bounce(Paddle)
+13819 Bounce(Border)
+13833 Bounce(Wall)
+13972 Bounce(Paddle)
+14000 S Rally 2 4 2 3 159 145 47 163 1 -1
+14000 F 74822d8bcf319d05
+14111 Bounce(Wall)
+14148 Bounce(Border)
+14191 Point
+14326 Serve
+14338 Bounce(Border)
+14417 Point
+14500 S Waiting 2 4 4 0 132 111 143 43 -1 -1
+14553 Serve
+14644 Point
+14780 Serve
+14871 Point
+15000 S Waiting 2 4 6 0 66 51 97 79 -1 1
+15007 Serve
+15098 Point
+15234 Serve
+15325 Point
+15461 Serve
+15500 S Rally 2 4 8 0 71 79 51 94 -1 -1
+15552 Point
+15688 Serve
+15759 Bounce(Paddle)
+15898 Bounce(Wall)
+16000 S Rally 2 4 9 2 95 76 56 98 -1 0
+16000 F 9276463d82c392a9
+16037 Bounce(Paddle)
+16079 Bounce(Border)
+16175 Bounce(Border)
+16176 Bounce(Wall)
+16239 Bounce(Border)
+16256 Point
+16391 Serve
+16437 Bounce(Border)
+16482 Point
+16500 S Waiting 2 4 11 0 70 52 -19 18 -1 -3
+16618 Serve
+16653 Bounce(Border)
+16689 Bounce(Paddle)
+16725 Bounce(Border)
+16789 Bounce(Border)
+16828 Bounce(Wall)
+16853 Bounce(Border)
+16917 Bounce(Border)
+16967 Bounce(Paddle)
+17000 S Rally 2 4 11 3 158 166 52 164 1 0
+17123 Point
+17263 Serve
+17334 Bounce(Wall)
+17493 Point
+17500 S Waiting 2 5 12 0 147 156 -8 164 -1 0
+17629 Serve
+17720 Point
+17856 Serve
+17947 Point
+18000 S Waiting 3 5 14 0 146 156 173 164 -1 0
+18000 F 039666beb9fc8915
+18083 Serve
+18090 Bounce(Paddle)
+18104 Bounce(Border)
+18168 Bounce(Border)
+18169 Bounce(Paddle)
+18170 Bounce(Border)
+18234 Bounce(Border)
+18248 Bounce(Paddle)
+18340 Point
+18480 Serve
+18500 S Rally 3 6 14 0 160 171 107 164 1 0
+18553 Bounce(Paddle)
+18603 Bounce(Border)
+18667 Bounce(Border)
+18694 Bounce(Paddle)
+18731 Bounce(Border)
+18769 Bounce(Paddle)
+18780 Bounce(Paddle)
+18818 Bounce(Paddle)
+18856 Bounce(Paddle)
+18860 Bounce(Border)
+18862 Bounce(Paddle)
+18863 Bounce(Border)
+18868 Bounce(Paddle)
+18872 Bounce(Paddle)
+18876 Bounce(Paddle)
+18880 Bounce(Paddle)
+18884 Bounce(Paddle)
+18888 Bounce(Paddle)
+18892 Bounce(Paddle)
+18896 Bounce(Paddle)
+18900 Bounce(Paddle)
+18904 Bounce(Paddle)
+18908 Bounce(Paddle)
+18912 Bounce(Paddle)
+18916 Bounce(Paddle)
+18920 Bounce(Paddle)
+18924 Bounce(Paddle)
+18928 Bounce(Paddle)
+18932 Bounce(Paddle)
+18936 Bounce(Paddle)
+18940 Bounce(Paddle)
+18944 Bounce(Paddle)
+18971 Bounce(Paddle)
+19000 S Rally 3 6 14 28 39 46 101 38 1 -2
+19012 Bounce(Border)
+19025 Point
+19164 Serve
+19171 Bounce(Paddle)
+19204 Bounce(Border)
+19266 Point
+19500 S Waiting 3 0 0 0 147 132 69 63 1 -2
+19518 Serve
+19524 Bounce(Border)
+19589 Bounce(Paddle)
+19733 Bounce(Paddle)
+19813 Bounce(Paddle)
+19908 Point
+20000 S Waiting 3 0 1 0 54 34 134 40 -1 1
+20000 F 2dd58fbef605b7d5
+20044 Serve
+20051 Bounce(Paddle)
+20062 Bounce(Paddle)
+20088 Bounce(Border)
+20137 Bounce(Wall)
+20152 Bounce(Border)
+20216 Bounce(Border)
+20280 Bounce(Border)
+20293 Point
+20433 Serve
+20476 Bounce(Border)
+20500 S Rally 1 0 2 0 56 86 154 85 1 3
+20504 Bounce(Wall)
+20532 Bounce(Border)
+20596 Bounce(Border)
+20660 Bounce(Border)
+20663 Point
+20799 Serve
+20852 Bounce(Border)
+20870 Bounce(Wall)
+20916 Bounce(Border)
+20980 Bounce(Border)
+21000 S Rally 1 1 2 1 148 141 149 145 1 -3
+21026 Point
+21166 Serve
+21195 Bounce(Border)
+21254 Point
+21394 Serve
+21411 Bounce(Border)
+21475 Bounce(Border)
+21482 Point
+21500 S Waiting 1 1 5 0 40 24 193 89 1 3
+21622 Serve
+21667 Bounce(Border)
+21710 Point
+21850 Serve
+21883 Bounce(Border)
+21921 Bounce(Wall)
+21959 Bounce(Border)
+22000 S Rally 1 1 6 1 91 62 79 82 -1 -3
+22000 F 40369eec661e3e2d
+22023 Bounce(Border)
+22060 Bounce(Wall)
+22087 Bounce(Border)
+22151 Bounce(Border)
+22199 Bounce(Wall)
+22215 Bounce(Border)
+22279 Bounce(Border)
+22338 Bounce(Wall)
+22343 Bounce(Border)
+22407 Bounce(Border)
+22408 Bounce(Wall)
+22409 Bounce(Border)
+22473 Bounce(Border)
+22478 Bounce(Wall)
+22500 S Rally 1 1 6 6 120 110 63 124 1 -3
+22537 Bounce(Border)
+22548 Bounce(Wall)
+22601 Bounce(Border)
+22618 Bounce(Wall)
+22635 Bounce(Border)
+22665 Bounce(Wall)
+22699 Bounce(Border)
+22712 Bounce(Wall)
+22759 Bounce(Wall)
+22806 Bounce(Wall)
+22819 Bounce(Border)
+22858 Point
+22998 Serve
+23000 S Rally 3 1 7 0 109 132 89 119 1 -3
+23035 Bounce(Border)
+23086 Point
+23226 Serve
+23233 Bounce(Paddle)
+23251 Bounce(Border)
+23308 Bounce(Paddle)
+23365 Bounce(Border)
+23429 Bounce(Border)
+23464 Point
+23500 S Waiting 3 3 7 0 97 82 -17 -6 1 -3
+23604 Serve
+23611 Bounce(Paddle)
+23622 Bounce(Paddle)
+23650 Bounce(Border)
+23714 Point
+23854 Serve
+23877 Bounce(Border)
+23942 Point
+24000 S Waiting 2 5 7 0 54 71 5 -40 1 -2
+24000 F 76be9dc9f611ae95
+24082 Serve
+24104 Bounce(Border)
+24153 Bounce(Wall)
+24312 Point
+24448 Serve
+24500 S Rally 2 5 8 0 92 123 38 113 -1 0
+24539 Point
+24675 Serve
+24766 Point
+24902 Serve
+24993 Point
+25000 S Waiting 2 5 11 0 125 119 -8 113 -1 0
+25129 Serve
+25200 Bounce(Paddle)
+25246 Bounce(Border)
+25339 Bounce(Wall)
+25341 Bounce(Border)
+25405 Bounce(Border)
+25469 Bounce(Border)
+25478 Bounce(Paddle)
+25500 S Rally 2 5 11 3 72 79 41 84 1 2
+25561 Bounce(Border)
+25617 Bounce(Wall)
+25696 Bounce(Border)
+25697 Point
+25832 Serve
+25886 Bounce(Border)
+25907 Bounce(Paddle)
+25918 Bounce(Border)
+26000 S Rally 2 5 12 1 21 35 108 42 1 -2
+26000 F 29919a484234c035
+26014 Bounce(Border)
+26050 Bounce(Wall)
+26169 Bounce(Border)
+26189 Bounce(Paddle)
+26345 Point
+26485 Serve
+26500 S Rally 2 6 12 0 135 146 102 137 1 -1
+26556 Bounce(Wall)
+26578 Bounce(Border)
+26642 Bounce(Border)
+26695 Bounce(Paddle)
+26774 Bounce(Border)
+26834 Bounce(Wall)
+26858 Bounce(Border)
+27000 S Waiting 2 0 0 0 167 179 196 -28 1 -3
+27119 Serve
+27138 Bounce(Border)
+27190 Bounce(Wall)
+27349 Point
+27485 Serve
+27500 S Rally 2 0 1 0 23 32 75 49 -1 0
+27556 Bounce(Paddle)
+27573 Bounce(Border)
+27668 Bounce(Border)
+27695 Bounce(Wall)
+27831 Bounce(Border)
+27854 Point
+27990 Serve
+28000 S Rally 2 0 2 0 173 174 80 184 -1 1
+28000 F fae2321f40c33a09
+28021 Bounce(Border)
+28061 Bounce(Paddle)
+28111 Bounce(Border)
+28175 Bounce(Border)
+28200 Bounce(Wall)
+28239 Bounce(Border)
+28303 Bounce(Border)
+28339 Bounce(Wall)
+28367 Bounce(Border)
+28431 Bounce(Border)
+28478 Bounce(Wall)
+28495 Bounce(Border)
+28500 S Rally 1 0 2 4 35 32 114 30 -1 3
+28558 Point
+28693 Serve
+28710 Bounce(Border)
+28774 Bounce(Border)
+28784 Point
+28920 Serve
+28966 Bounce(Border)
+29000 S Rally 1 2 2 0 107 91 10 115 -1 3
+29011 Point
+29147 Serve
+29182 Bounce(Border)
+29218 Bounce(Wall)
+29254 Bounce(Border)
+29500 S Waiting 4 0 0 0 149 157 86 103 1 3
+29501 Serve
+29534 Bounce(Border)
+29572 Bounce(Paddle)
+29686 Bounce(Border)
+29711 Bounce(Paddle)
+29736 Bounce(Border)
+29850 Bounce(Paddle)
+29876 Bounce(Border)
+29940 Bounce(Border)
+30000 S Rally 4 0 0 3 6 39 8 25 -1 -3
+30000 F a16e57dd2239bd8d
+30004 Bounce(Border)
+30009 Point
+30145 Serve
+30196 Bounce(Border)
+30236 Point
+30372 Serve
+30411 Bounce(Border)
+30463 Point
+30500 S Waiting 4 0 3 0 58 40 189 203 -1 -3
+30599 Serve
+30627 Bounce(Border)
+30690 Point
+30826 Serve
+30843 Bounce(Border)
+30907 Bounce(Border)
+30917 Point
+31000 S Waiting 4 0 5 0 47 29 143 118 -1 -3
+31053 Serve
+31099 Bounce(Border)
+31124 Bounce(Paddle)
+31199 Bounce(Border)
+31280 Point
+31420 Serve
+31493 Bounce(Paddle)
+31500 S Rally 4 1 5 1 108 110 153 112 -1 -1
+31597 Bounce(Border)
+31654 Point
+31790 Serve
+31861 Bounce(Paddle)
+32000 Bounce(Paddle)
+32000 S Rally 4 1 6 2 139 126 158 131 -1 -1
+32000 F 03585258fb8ef85d
+32116 Bounce(Border)
+32159 Point
+32295 Serve
+32306 Bounce(Border)
+32366 Bounce(Paddle)
+32396 Bounce(Border)
+32491 Bounce(Border)
+32500 S Rally 4 1 7 1 35 23 153 33 1 2
+32505 Bounce(Paddle)
+32664 Point
+32800 Serve
+32807 Bounce(Paddle)
+32818 Bounce(Paddle)
+32852 Bounce(Border)
+32894 Bounce(Paddle)
+32968 Bounce(Border)
+32970 Bounce(Paddle)
+32974 Bounce(Border)
+32976 Bounce(Paddle)
+32977 Bounce(Border)
+32982 Bounce(Paddle)
+32988 Bounce(Paddle)
+32994 Bounce(Paddle)
+32998 Bounce(Paddle)
+33000 S Rally 3 1 8 9 159 173 88 173 1 1
+33002 Bounce(Paddle)
+33006 Bounce(Paddle)
+33010 Bounce(Paddle)
+33014 Bounce(Paddle)
+33040 Bounce(Paddle)
+33052 Bounce(Border)
+33094 Point
+33229 Serve
+33242 Bounce(Border)
+33320 Point
+33456 Serve
+33469 Bounce(Border)
+33500 S Rally 3 1 10 0 77 64 46 76 -1 2
+33527 Bounce(Paddle)
+33566 Bounce(Border)
+33602 Bounce(Paddle)
+33677 Bounce(Paddle)
+33688 Bounce(Border)
+33752 Bounce(Border)
+33816 Bounce(Border)
+33816 Bounce(Paddle)
+33854 Bounce(Paddle)
+33901 Point
+34000 S Waiting 3 2 10 0 109 113 47 117 1 -2
+34000 F ed2f72d57b7a0855
+34040 Serve
+34050 Bounce(Paddle)
+34051 Bounce(Border)
+34064 Bounce(Paddle)
+34075 Bounce(Paddle)
+34086 Bounce(Paddle)
+34092 Bounce(Paddle)
+34098 Bounce(Paddle)
+34104 Bounce(Paddle)
+34110 Bounce(Paddle)
+34114 Bounce(Paddle)
+34115 Bounce(Border)
+34118 Bounce(Paddle)
+34149 Point
+34288 Serve
+34295 Bounce(Paddle)
+34370 Bounce(Paddle)
+34445 Bounce(Paddle)
+34492 Bounce(Border)
+34500 S Rally 3 3 10 3 39 24 39 30 -1 2
+34540 Point
+34676 Serve
+34690 Bounce(Border)
+34767 Point
+34903 Serve
+34910 Bounce(Paddle)
+34921 Bounce(Paddle)
+34984 Bounce(Border)
+34996 Bounce(Paddle)
+35000 S Rally 3 3 12 3 45 48 23 37 1 -3
+35008 Bounce(Border)
+35072 Bounce(Border)
+35136 Bounce(Border)
+35136 Bounce(Paddle)
+35216 Point
+35352 Serve
+35364 Bounce(Border)
+35423 Bounce(Paddle)
+35496 Bounce(Border)
+35500 S Rally 1 3 13 1 32 0 96 19 1 1
+35562 Bounce(Wall)
+35604 Bounce(Border)
+35668 Bounce(Border)
+35701 Bounce(Wall)
+35732 Bounce(Border)
+35796 Bounce(Border)
+35840 Bounce(Wall)
+35884 Bounce(Border)
+35910 Bounce(Wall)
+35948 Bounce(Border)
+35980 Bounce(Wall)
+36000 S Rally 1 3 13 6 40 52 118 51 -1 -3
+36000 F 5020136cc00adca5
+36012 Bounce(Border)
+36050 Bounce(Wall)
+36076 Bounce(Border)
+36120 Bounce(Wall)
+36164 Bounce(Border)
+36167 Bounce(Wall)
+36220 Point
+36359 Serve
+36380 Bounce(Border)
+36444 Bounce(Border)
+36447 Point
+36500 S Attract 1 3 15 0 30 16 -
+36744 Serve
+36786 Bounce(Border)
+36832 Point
+36972 Serve
+37000 S Rally 1 0 1 0 7 6 115 16 1 -3
+37001 Bounce(Border)
+37043 Bounce(Wall)
+37065 Bounce(Border)
+37129 Bounce(Border)
+37182 Bounce(Wall)
+37235 Bounce(Border)
+37299 Bounce(Border)
+37338 Point
+37478 Serve
+37500 S Rally 1 0 2 0 143 154 109 165 1 3
+37514 Bounce(Border)
+37566 Point
+37706 Serve
+37730 Bounce(Border)
+37777 Bounce(Wall)
+37794 Bounce(Border)
+37858 Bounce(Border)
+37916 Bounce(Wall)
+37922 Bounce(Border)
+37986 Bounce(Border)
+38000 S Rally 1 0 3 2 156 174 103 164 1 -3
+38000 F 468fa9d48a425095
+38050 Bounce(Border)
+38055 Bounce(Wall)
+38060 Bounce(Border)
+38124 Bounce(Border)
+38188 Bounce(Border)
+38194 Bounce(Wall)
+38200 Bounce(Border)
+38264 Bounce(Border)
+38264 Bounce(Wall)
+38265 Bounce(Border)
+38330 Bounce(Border)
+38344 Point
+38480 Serve
+38500 S Rally 1 1 3 0 145 127 70 134 -1 3
+38524 Bounce(Border)
+38555 Bounce(Wall)
+38586 Bounce(Border)
+38650 Bounce(Border)
+38714 Bounce(Border)
+38715 Point
+38855 Serve
+38906 Bounce(Border)
+38943 Point
+39000 S Waiting 1 1 5 0 102 123 4 33 1 3
+39083 Serve
+39122 Bounce(Border)
+39171 Point
+39311 Serve
+39337 Bounce(Border)
+39399 Point
+39500 S Waiting 1 1 7 0 209 181 48 173 1 -3
+39539 Serve
+39553 Bounce(Border)
+39610 Bounce(Wall)
+39617 Bounce(Border)
+39681 Bounce(Border)
+39745 Bounce(Border)
+39749 Bounce(Wall)
+39809 Bounce(Border)
+39873 Bounce(Border)
+39888 Bounce(Wall)
+39937 Bounce(Border)
+40000 S Rally 1 1 7 3 208 179 46 203 -1 3
+40000 F 47fa1119727dddcd
+run 4 5deece66d2545f49 40000
+243 Serve
+331 Point
+471 Serve
+500 S Rally 4 1 0 0 116 103 116 115 1 -1
+542 Bounce(Paddle)
+608 Bounce(Border)
+681 Bounce(Paddle)
+820 Bounce(Paddle)
+842 Bounce(Border)
+937 Bounce(Border)
+979 Point
+1000 S Waiting 4 1 1 0 102 108 -22 79 -1 -2
+1115 Serve
+1127 Bounce(Border)
+1206 Point
+1342 Serve
+1354 Bounce(Border)
+1413 Bounce(Paddle)
+1486 Bounce(Border)
+1500 S Rally 4 1 2 1 194 192 106 191 1 -1
+1569 Point
+1709 Serve
+1797 Point
+1937 Serve
+2000 S Rally 4 3 2 0 83 64 150 71 1 -1
+2000 F f9ccdf1d71887dad
+2008 Bounce(Paddle)
+2167 Point
+2303 Serve
+2394 Point
+2500 S Waiting 2 3 4 0 74 65 120 63 -1 0
+2530 Serve
+2601 Bounce(Paddle)
+2649 Bounce(Border)
+2713 Bounce(Border)
+2740 Bounce(Wall)
+2821 Bounce(Border)
+2899 Point
+3000 S Waiting 2 3 5 0 99 97 125 194 -1 1
+3035 Serve
+3106 Bounce(Paddle)
+3245 Bounce(Wall)
+3277 Bounce(Border)
+3341 Bounce(Border)
+3384 Bounce(Paddle)
+3405 Bounce(Border)
+3469 Bounce(Border)
+3500 S Rally 2 3 5 3 130 92 135 113 1 -3
+3523 Bounce(Wall)
+3552 Bounce(Border)
+3603 Point
+3738 Serve
+3742 Bounce(Border)
+3829 Point
+3965 Serve
+4000 S Rally 2 3 7 0 88 88 55 83 -1 1
+4000 F a657426b9614ffe1
+4056 Point
+4192 Serve
+4263 Bounce(Wall)
+4280 Bounce(Border)
+4344 Bounce(Border)
+4402 Bounce(Wall)
+4408 Bounce(Border)
+4472 Bounce(Border)
+4500 S Rally 1 3 8 2 109 120 60 121 -1 -3
+4536 Bounce(Border)
+4541 Bounce(Wall)
+4600 Bounce(Border)
+4664 Bounce(Border)
+4680 Bounce(Wall)
+4696 Bounce(Border)
+4750 Bounce(Wall)
+4760 Bounce(Border)
+4820 Bounce(Wall)
+4880 Bounce(Border)
+4890 Bounce(Wall)
+4900 Bounce(Border)
+4960 Bounce(Wall)
+5000 S Rally 1 3 8 8 152 132 38 145 -1 3
+5007 Bounce(Wall)
+5058 Bounce(Border)
+5060 Point
+5199 Serve
+5250 Bounce(Border)
+5270 Bounce(Wall)
+5314 Bounce(Border)
+5378 Bounce(Border)
+5409 Bounce(Wall)
+5440 Bounce(Border)
+5500 S Rally 1 3 9 2 40 35 110 25 1 -3
+5504 Bounce(Border)
+5549 Bounce(Wall)
+5568 Bounce(Border)
+5632 Bounce(Border)
+5689 Bounce(Wall)
+5696 Bounce(Border)
+5760 Bounce(Border)
+5761 Bounce(Wall)
+5824 Bounce(Border)
+5843 Point
+5979 Serve
+6000 S Rally 1 4 9 0 114 93 69 97 -1 -3
+6000 F 41f65e1924d2aefd
+6028 Bounce(Border)
+6050 Bounce(Wall)
+6072 Bounce(Border)
+6136 Bounce(Border)
+6189 Bounce(Wall)
+6200 Bounce(Border)
+6264 Bounce(Border)
+6328 Bounce(Border)
+6328 Bounce(Wall)
+6392 Bounce(Border)
+6456 Bounce(Border)
+6467 Bounce(Paddle)
+6478 Bounce(Border)
+6500 S Rally 4 4 9 4 64 79 92 79 -1 3
+6542 Bounce(Border)
+6547 Point
+6682 Serve
+6734 Bounce(Border)
+6773 Point
+6909 Serve
+6950 Bounce(Border)
+7000 Point
+7000 S Waiting 4 4 12 0 149 169 -1 164 -1 3
+7136 Serve
+7166 Bounce(Border)
+7227 Point
+7363 Serve
+7381 Bounce(Border)
+7434 Bounce(Paddle)
+7451 Bounce(Border)
+7500 S Rally 4 4 13 1 90 124 85 108 1 -2
+7547 Bounce(Border)
+7590 Point
+7730 Serve
+7739 Bounce(Border)
+7818 Point
+7958 Serve
+7966 Bounce(Border)
+8000 S Rally 3 6 13 0 144 113 129 137 1 -2
+8000 F 37b80557ec5d879d
+8029 Bounce(Paddle)
+8092 Bounce(Border)
+8187 Bounce(Border)
+8188 Point
+8324 Serve
+8331 Bounce(Paddle)
+8342 Bounce(Paddle)
+8353 Bounce(Paddle)
+8364 Bounce(Paddle)
+8402 Bounce(Paddle)
+8424 Bounce(Border)
+8472 Bounce(Paddle)
+8500 S Rally 3 6 14 6 128 128 102 119 -1 2
+8543 Bounce(Border)
+8552 Point
+8636 AttractTick
+9000 S Waiting 3 0 0 0 166 172 34 77 1 2
+9053 Serve
+9060 Bounce(Paddle)
+9071 Bounce(Paddle)
+9146 Bounce(Paddle)
+9176 Bounce(Border)
+9305 Point
+9441 Serve
+9448 Bounce(Paddle)
+9500 S Rally 3 0 1 1 92 95 135 97 1 0
+9523 Bounce(Paddle)
+9564 Bounce(Border)
+9659 Bounce(Border)
+9682 Point
+9818 Serve
+9849 Bounce(Border)
+9909 Point
+10000 S Waiting 3 0 3 0 77 76 135 166 -1 -2
+10000 F a05412f1b9fad275
+10045 Serve
+10052 Bounce(Paddle)
+10063 Bounce(Paddle)
+10079 Bounce(Border)
+10079 Bounce(Paddle)
+10095 Bounce(Paddle)
+10142 Bounce(Border)
+10143 Point
+10278 Serve
+10285 Bounce(Paddle)
+10377 Point
+10500 S Waiting 3 1 4 0 141 132 70 158 1 0
+10517 Serve
+10524 Bounce(Paddle)
+10535 Bounce(Paddle)
+10546 Bounce(Paddle)
+10557 Bounce(Paddle)
+10595 Bounce(Paddle)
+10598 Bounce(Border)
+10633 Bounce(Paddle)
+10679 Point
+10819 Serve
+10907 Point
+11000 S Waiting 3 3 4 0 94 107 40 118 1 0
+11047 Serve
+11054 Bounce(Paddle)
+11149 Point
+11285 Serve
+11376 Point
+11500 S Waiting 3 3 6 0 101 117 102 118 -1 0
+11512 Serve
+11603 Point
+11739 Serve
+11746 Bounce(Paddle)
+11781 Bounce(Border)
+11838 Point
+11978 Serve
+11985 Bounce(Paddle)
+12000 S Rally 3 4 7 1 40 15 79 35 -1 -1
+12000 F 5c47ed98b92f200d
+12020 Bounce(Border)
+12080 Point
+12216 Serve
+12223 Bounce(Paddle)
+12315 Point
+12455 Serve
+12500 S Rally 3 5 8 0 168 174 132 192 1 0
+12543 Point
+12683 Serve
+12690 Bounce(Paddle)
+12785 Point
+12921 Serve
+12992 Bounce(Paddle)
+13000 S Rally 3 6 9 1 180 173 27 184 1 -1
+13067 Bounce(Paddle)
+13078 Bounce(Paddle)
+13089 Bounce(Paddle)
+13095 Bounce(Paddle)
+13101 Bounce(Paddle)
+13107 Bounce(Paddle)
+13113 Bounce(Paddle)
+13117 Bounce(Paddle)
+13121 Bounce(Paddle)
+13125 Bounce(Paddle)
+13129 Bounce(Paddle)
+13133 Bounce(Paddle)
+13137 Bounce(Paddle)
+13141 Bounce(Paddle)
+13145 Bounce(Paddle)
+13149 Bounce(Paddle)
+13153 Bounce(Paddle)
+13157 Bounce(Paddle)
+13161 Bounce(Paddle)
+13165 Bounce(Paddle)
+13169 Bounce(Paddle)
+13173 Bounce(Paddle)
+13204 Point
+13344 Serve
+13374 Bounce(Border)
+13432 Point
+13500 S Waiting 3 8 9 0 172 171 15 129 1 3
+13572 Serve
+13590 Bounce(Border)
+13643 Bounce(Paddle)
+13718 Bounce(Paddle)
+13771 Bounce(Border)
+13810 Point
+13950 Serve
+13957 Bounce(Paddle)
+14000 S Rally 3 9 9 1 112 106 51 100 -1 0
+14000 F 484a9e13b862d58d
+14032 Bounce(Paddle)
+14067 Bounce(Border)
+14131 Bounce(Border)
+14188 Point
+14328 Serve
+14347 Bounce(Border)
+14399 Bounce(Wall)
+14411 Bounce(Border)
+14475 Bounce(Border)
+14500 S Rally 3 10 9 1 79 69 57 89 -1 3
+14538 Bounce(Paddle)
+14540 Bounce(Border)
+14694 Point
+14834 Serve
+14841 Bounce(Paddle)
+14867 Bounce(Border)
+14931 Bounce(Border)
+14936 Point
+15000 S Waiting 2 11 10 0 206 171 162 29 -1 3
+15072 Serve
+15123 Bounce(Border)
+15163 Point
+15299 Serve
+15339 Bounce(Border)
+15390 Point
+15500 S Waiting 2 11 12 0 139 176 116 175 -1 -3
+15526 Serve
+15554 Bounce(Border)
+15597 Bounce(Paddle)
+15724 Bounce(Border)
+15736 Bounce(Wall)
+15742 Bounce(Border)
+15837 Bounce(Border)
+15875 Bounce(Paddle)
+15951 Bounce(Border)
+16000 S Rally 2 11 12 3 145 167 144 156 1 -1
+16000 F 4f30592a6f09c755
+16017 Bounce(Wall)
+16098 Point
+16234 Serve
+16305 Bounce(Paddle)
+16379 Bounce(Border)
+16444 Bounce(Wall)
+16500 S Rally 2 11 13 2 132 135 102 145 -1 0
+16583 Bounce(Paddle)
+16613 Bounce(Border)
+16708 Bounce(Border)
+16722 Bounce(Wall)
+16802 Point
+16937 Serve
+17000 S Rally 2 11 14 0 80 102 27 89 -1 -1
+17008 Bounce(Paddle)
+17222 Serve
+17310 Point
+17450 Serve
+17457 Bounce(Paddle)
+17500 S Rally 3 1 0 1 56 84 51 81 -1 0
+17552 Point
+17688 Serve
+17759 Bounce(Wall)
+17801 Bounce(Border)
+17865 Bounce(Border)
+17898 Bounce(Wall)
+17929 Bounce(Border)
+17993 Bounce(Border)
+18000 S Rally 1 1 1 2 13 28 56 36 -1 3
+18000 F 9cceaa2e8ca208bd
+18057 Point
+18193 Serve
+18208 Bounce(Border)
+18264 Bounce(Wall)
+18320 Bounce(Border)
+18384 Bounce(Border)
+18403 Bounce(Wall)
+18422 Bounce(Border)
+18486 Bounce(Border)
+18500 S Rally 1 2 1 2 53 35 61 55 -1 3
+18550 Bounce(Border)
+18562 Point
+18698 Serve
+18742 Bounce(Border)
+18769 Bounce(Wall)
+18806 Bounce(Border)
+18870 Bounce(Border)
+18925 Point
+19000 S Waiting 1 3 2 0 183 176 22 140 1 3
+19065 Serve
+19086 Bounce(Border)
+19136 Bounce(Paddle)
+19157 Bounce(Border)
+19211 Bounce(Paddle)
+19222 Bounce(Paddle)
+19233 Bounce(Paddle)
+19239 Bounce(Paddle)
+19245 Bounce(Paddle)
+19251 Bounce(Paddle)
+19257 Bounce(Paddle)
+19261 Bounce(Paddle)
+19265 Bounce(Paddle)
+19269 Bounce(Paddle)
+19273 Bounce(Paddle)
+19277 Bounce(Paddle)
+19281 Bounce(Paddle)
+19285 Bounce(Paddle)
+19289 Bounce(Paddle)
+19293 Bounce(Paddle)
+19297 Bounce(Paddle)
+19301 Bounce(Paddle)
+19305 Bounce(Paddle)
+19309 Bounce(Paddle)
+19313 Bounce(Paddle)
+19344 Point
+19483 Serve
+19495 Bounce(Paddle)
+19500 S Rally 3 4 2 1 177 185 94 192 -1 0
+19595 Point
+19731 Serve
+19803 Bounce(Paddle)
+19943 Bounce(Paddle)
+19980 Bounce(Border)
+20000 S Rally 4 4 3 2 41 35 101 35 -1 1
+20000 F 4a1afde6480b0b55
+20102 Point
+20238 Serve
+20329 Point
+20465 Serve
+20500 S Rally 4 4 5 0 126 91 55 115 -1 1
+20556 Point
+20692 Serve
+20763 Bounce(Paddle)
+20789 Bounce(Border)
+20885 Bounce(Border)
+20902 Bounce(Paddle)
+20981 Bounce(Border)
+21000 S Rally 4 4 6 2 34 62 60 52 -1 2
+21061 Point
+21197 Serve
+21208 Bounce(Border)
+21268 Bounce(Paddle)
+21388 Bounce(Border)
+21424 Point
+21500 S Waiting 4 5 7 0 148 179 23 93 1 -1
+21564 Serve
+21578 Bounce(Border)
+21635 Bounce(Paddle)
+21654 Bounce(Border)
+21718 Bounce(Border)
+21782 Bounce(Border)
+21794 Point
+21930 Serve
+21974 Bounce(Border)
+22000 S Rally 4 5 8 0 136 112 20 129 -1 -3
+22000 F cd4b0382448ef615
+22021 Point
+22157 Serve
+22190 Bounce(Border)
+22228 Bounce(Paddle)
+22285 Bounce(Border)
+22367 Bounce(Paddle)
+22376 Bounce(Border)
+22440 Bounce(Border)
+22500 S Rally 4 5 9 2 36 9 25 27 -1 -3
+22504 Bounce(Border)
+22506 Bounce(Paddle)
+22508 Bounce(Border)
+22572 Bounce(Border)
+22636 Bounce(Border)
+22645 Bounce(Paddle)
+22725 Point
+22860 Serve
+22951 Point
+23000 S Waiting 4 5 11 0 21 34 177 42 -1 0
+23087 Serve
+23178 Point
+23314 Serve
+23405 Point
+23500 S Waiting 4 5 13 0 47 45 131 42 -1 0
+23541 Serve
+23612 Bounce(Paddle)
+23626 Bounce(Border)
+23722 Bounce(Border)
+23751 Bounce(Paddle)
+23780 Bounce(Border)
+23876 Bounce(Border)
+23910 Point
+24000 S Waiting 4 5 14 0 56 82 136 150 -1 -2
+24000 F b50febf31a19d85d
+24046 Serve
+24068 Bounce(Border)
+24117 Bounce(Paddle)
+24164 Bounce(Border)
+24192 Bounce(Paddle)
+24237 Bounce(Border)
+24267 Bounce(Paddle)
+24297 Bounce(Border)
+24361 Bounce(Border)
+24423 Point
+24500 S Waiting 3 6 14 0 15 33 24 53 1 -3
+24563 Serve
+24577 Bounce(Border)
+24641 Bounce(Border)
+24651 Point
+24791 Serve
+24833 Bounce(Border)
+24879 Point
+25000 S Waiting 3 8 14 0 63 46 68 58 1 3
+25019 Serve
+25026 Bounce(Paddle)
+25087 Bounce(Border)
+25121 Point
+25204 AttractTick
+25496 Serve
+25500 S Rally 1 0 0 0 193 194 91 199 1 2
+25503 Bounce(Border)
+25567 Bounce(Wall)
+25588 Bounce(Border)
+25652 Bounce(Border)
+25706 Bounce(Wall)
+25716 Bounce(Border)
+25780 Bounce(Border)
+25844 Bounce(Border)
+25845 Bounce(Wall)
+25846 Bounce(Border)
+25910 Bounce(Border)
+25974 Bounce(Border)
+25984 Bounce(Wall)
+25994 Bounce(Border)
+26000 S Rally 1 0 0 4 42 11 51 32 1 3
+26000 F 3e92fe26ff1de56d
+26054 Bounce(Wall)
+26058 Bounce(Border)
+26122 Bounce(Border)
+26124 Bounce(Wall)
+26186 Bounce(Border)
+26194 Bounce(Wall)
+26202 Bounce(Border)
+26264 Bounce(Wall)
+26311 Bounce(Wall)
+26326 Bounce(Border)
+26358 Bounce(Wall)
+26390 Bounce(Border)
+26410 Point
+26500 S Waiting 1 0 1 0 160 137 37 139 1 -3
+26550 Serve
+26606 Bounce(Border)
+26638 Point
+26778 Serve
+26821 Bounce(Border)
+26849 Bounce(Wall)
+26885 Bounce(Border)
+26949 Bounce(Border)
+26988 Bounce(Wall)
+27000 S Rally 1 0 2 2 104 112 31 126 1 3
+27027 Bounce(Border)
+27091 Bounce(Border)
+27144 Point
+27284 Serve
+27306 Bounce(Border)
+27355 Bounce(Wall)
+27370 Bounce(Border)
+27434 Bounce(Border)
+27494 Bounce(Wall)
+27498 Bounce(Border)
+27500 S Rally 1 0 3 2 189 201 25 199 1 -3
+27562 Bounce(Border)
+27626 Bounce(Border)
+27650 Point
+27790 Serve
+27841 Bounce(Border)
+27861 Bounce(Wall)
+27881 Bounce(Border)
+27945 Bounce(Border)
+28000 Bounce(Paddle)
+28000 S Rally 4 0 4 2 175 173 19 180 1 -1
+28000 F cbb1c27dc301bc4d
+28139 Bounce(Paddle)
+28298 Point
+28434 Serve
+28500 S Rally 4 0 5 0 134 122 24 139 -1 1
+28505 Bounce(Paddle)
+28634 Bounce(Border)
+28661 Point
+28801 Serve
+28824 Bounce(Border)
+28889 Point
+29000 S Waiting 4 2 5 0 125 122 58 29 1 -1
+29029 Serve
+29117 Point
+29257 Serve
+29328 Bounce(Paddle)
+29390 Bounce(Border)
+29485 Bounce(Border)
+29487 Point
+29500 S Waiting 4 3 6 0 0 1 -14 45 -1 2
+29623 Serve
+29675 Bounce(Border)
+29694 Bounce(Paddle)
+29850 Point
+29990 Serve
+30000 S Rally 4 4 6 0 32 60 97 53 1 0
+30000 F 60f233a336a7c2b5
+30061 Bounce(Paddle)
+30074 Bounce(Border)
+30138 Bounce(Border)
+30202 Bounce(Border)
+30220 Point
+30356 Serve
+30404 Bounce(Border)
+30427 Bounce(Paddle)
+30488 Bounce(Border)
+30500 S Rally 4 4 7 1 31 21 92 39 1 2
+30583 Bounce(Border)
+30583 Point
+30723 Serve
+30773 Bounce(Border)
+30794 Bounce(Paddle)
+30942 Bounce(Border)
+30953 Point
+31000 S Waiting 4 5 8 0 31 21 179 73 -1 1
+31089 Serve
+31132 Bounce(Border)
+31160 Bounce(Paddle)
+31170 Bounce(Border)
+31234 Bounce(Border)
+31298 Bounce(Border)
+31316 Point
+31456 Serve
+31500 S Rally 4 6 8 0 10 10 131 27 1 -3
+31504 Bounce(Border)
+31544 Point
+31684 Serve
+31719 Bounce(Border)
+31756 Bounce(Paddle)
+31865 Bounce(Border)
+31896 Bounce(Paddle)
+31907 Bounce(Border)
+31971 Bounce(Border)
+32000 S Rally 4 7 8 2 131 100 123 118 1 -3
+32000 F 18d3b9c1fdb055ad
+32035 Bounce(Border)
+32035 Bounce(Paddle)
+32131 Bounce(Border)
+32174 Bounce(Paddle)
+32252 Point
+32392 Serve
+32480 Point
+32500 S Waiting 4 9 8 0 124 130 195 119 1 0
+32620 Serve
+32691 Bounce(Paddle)
+32795 Bounce(Border)
+32830 Bounce(Paddle)
+32842 Bounce(Border)
+32906 Bounce(Border)
+32970 Bounce(Border)
+32971 Bounce(Wall)
+32972 Bounce(Border)
+33000 S Rally 2 9 8 3 97 92 131 98 -1 3
+33036 Bounce(Border)
+33100 Bounce(Border)
+33132 Point
+33268 Serve
+33316 Bounce(Border)
+33339 Bounce(Paddle)
+33362 Bounce(Border)
+33426 Bounce(Border)
+33478 Bounce(Wall)
+33500 S Rally 2 9 9 2 89 83 136 95 -1 2
+33555 Bounce(Border)
+33617 Bounce(Paddle)
+33639 Bounce(Border)
+33703 Bounce(Border)
+33767 Bounce(Border)
+33773 Point
+33913 Serve
+33959 Bounce(Border)
+33984 Bounce(Wall)
+34000 S Rally 2 10 9 1 95 93 142 116 -1 -1
+34000 F 60d82ec9a788a775
+34101 Bounce(Border)
+34143 Point
+34279 Serve
+34291 Bounce(Border)
+34350 Bounce(Paddle)
+34481 Bounce(Border)
+34500 S Rally 2 10 10 1 16 47 169 34 1 1
+34506 Point
+34646 Serve
+34671 Bounce(Border)
+34734 Point
+34874 Serve
+34945 Bounce(Wall)
+34981 Bounce(Border)
+35000 S Rally 1 11 11 1 136 141 103 150 -1 -3
+35045 Bounce(Border)
+35084 Bounce(Wall)
+35109 Bounce(Border)
+35173 Bounce(Border)
+35223 Bounce(Wall)
+35273 Bounce(Border)
+35337 Bounce(Border)
+35382 Point
+35500 S Waiting 1 12 11 0 71 79 108 47 -1 3
+35518 Serve
+35553 Bounce(Border)
+35609 Point
+35745 Serve
+35769 Bounce(Border)
+35816 Bounce(Wall)
+35833 Bounce(Border)
+35897 Bounce(Border)
+35961 Bounce(Border)
+35972 Point
+36000 S Waiting 1 13 12 0 56 38 -25 130 1 3
+36000 F 48ca46110b7dc49d
+36112 Serve
+36153 Bounce(Border)
+36183 Bounce(Wall)
+36217 Bounce(Border)
+36281 Bounce(Border)
+36322 Bounce(Wall)
+36363 Bounce(Border)
+36427 Bounce(Border)
+36461 Bounce(Wall)
+36495 Bounce(Border)
+36500 S Rally 1 13 12 3 22 13 119 28 -1 3
+36559 Bounce(Border)
+36600 Bounce(Wall)
+36623 Bounce(Border)
+36670 Bounce(Wall)
+36687 Bounce(Border)
+36740 Bounce(Wall)
+36751 Bounce(Border)
+36810 Bounce(Wall)
+36869 Bounce(Border)
+36880 Bounce(Wall)
+36927 Bounce(Wall)
+36933 Bounce(Border)
+36974 Bounce(Wall)
+37000 S Rally 1 13 12 10 168 134 97 160 1 3
+37015 Bounce(Border)
+37021 Bounce(Wall)
+37027 Bounce(Border)
+37068 Bounce(Wall)
+37091 Bounce(Border)
+37115 Bounce(Wall)
+37155 Bounce(Border)
+37169 Point
+37304 Serve
+37347 Bounce(Border)
+37375 Bounce(Wall)
+37411 Bounce(Border)
+37475 Bounce(Border)
+37500 S Rally 1 14 12 1 94 85 144 88 1 3
+37531 Point
+37671 Serve
+37691 Bounce(Border)
+37742 Bounce(Wall)
+37755 Bounce(Border)
+37819 Bounce(Border)
+37881 Bounce(Paddle)
+38000 S Rally 4 14 13 2 59 81 138 81 1 -1
+38000 F 6802524239c26705
+38037 Point
+38172 AttractTick
+38400 AttractTick
+38500 S Attract 4 15 13 0 22 46 -
+38628 AttractTick
+38856 AttractTick
+39000 S Attract 1 15 13 0 22 46 -
+39227 Serve
+39315 Point
+39455 Serve
+39500 S Rally 1 0 1 0 131 116 132 131 1 1
+39526 Bounce(Wall)
+39542 Bounce(Border)
+39606 Bounce(Border)
+39665 Bounce(Wall)
+39670 Bounce(Border)
+39734 Bounce(Border)
+39798 Bounce(Border)
+39821 Point
+39961 Serve
+40000 S Rally 1 0 2 0 147 151 126 168 1 3
+40000 F d437414e9759c535

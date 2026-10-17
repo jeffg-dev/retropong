@@ -1,0 +1,19 @@
+[package]
+name = "retrocontroller-firmware-logic"
+description = "Pure, host-testable firmware logic for the RetroController paddle (oversampling, filtering, hysteresis, calibration learning, command handling, line framing, LED patterns). no_std, no embassy."
+# Deliberately NOT using `field.workspace = true` inheritance here: this
+# crate is built both as a root-workspace member (`cargo test -p
+# retrocontroller-firmware-logic` from the repo root) and as a path
+# dependency of `firmware/`, which is its own separate workspace. Workspace
+# inheritance resolves against whichever workspace the *current* Cargo
+# invocation treats as root, which differs between those two contexts, so
+# `.workspace = true` fields fail to resolve from one of them. Plain literal
+# values (matching the root workspace's `[workspace.package]`) avoid the
+# ambiguity entirely.
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+repository = "https://github.com/jeffg-dev/retropong"
+
+[dependencies]
+retrocontroller-protocol = { path = "../../protocol" }

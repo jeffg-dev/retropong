@@ -1,0 +1,80 @@
+:root {
+  color-scheme: dark;
+  background: #000;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  overflow: hidden;
+}
+#console {
+  height: 100svh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+}
+#game {
+  display: block;
+  width: min(100vw, 133.333svh);
+  height: min(75vw, 100svh);
+  image-rendering: pixelated;
+  outline: none;
+}
+#console[data-state="playing"] {
+  cursor: none;
+}
+#console:not([data-state="playing"]) {
+  cursor: pointer;
+}
+#source-link {
+  position: fixed;
+  bottom: max(24px, env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: #e0edda;
+  background: #111911;
+  border: 1px solid #71816b;
+  border-radius: 8px;
+  font:
+    bold 20px "Courier New",
+    monospace;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  padding: 14px 24px;
+  box-shadow: 0 0 24px #a4cc7a16;
+  white-space: nowrap;
+}
+#source-link svg {
+  flex: none;
+}
+#source-link:hover {
+  color: #fff;
+  background: #202d1c;
+  border-color: #c9e2b4;
+  box-shadow: 0 0 28px #a4cc7a30;
+}
+#source-link:focus-visible {
+  outline: 2px solid #d9edc3;
+  outline-offset: 5px;
+}
+#console[data-state="playing"] #source-link {
+  display: none;
+}
+@media (max-height: 480px) {
+  #source-link {
+    bottom: 12px;
+    padding: 8px 18px;
+    font-size: 18px;
+  }
+  #source-link svg {
+    width: 24px;
+    height: 24px;
+  }
+}

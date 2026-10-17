@@ -1,0 +1,10 @@
+[build]
+target = "thumbv8m.main-none-eabihf"
+
+[target.thumbv8m.main-none-eabihf]
+# Link args (--nmagic, -Tlink.x) come from build.rs, NOT from rustflags here,
+# to avoid passing them twice.
+runner = "picotool load -u -v -x -t elf"
+# Alternatives, if picotool isn't installed:
+#   runner = "probe-rs run --chip RP235x"
+#   runner = "elf2uf2-rs deploy -t -s --family rp2350-arm-s"

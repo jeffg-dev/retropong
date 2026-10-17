@@ -1,0 +1,60 @@
+{
+  "description": "Super Pong C-140 colour, taken from the game's packaging art (spec section 3.1): the background is black; the border and the foreground are each a gradient through a few anchor colours placed at the X of the box-art element they were read from. Colour depends only on the cell kind and the clock column X.",
+  "form": "background = (0, 0, 0). Drawn kinds: the sRGB anchors are converted to OKLab, interpolated linearly in L, a, b between the two anchors around X, held at the end anchors' colours beyond them, converted back to sRGB and rounded to 0..=255.",
+  "space": "OKLab",
+  "kinds": {
+    "background": "black",
+    "border": {
+      "luma": 152,
+      "stripe": 17,
+      "stripe_peak": 0.42,
+      "anchors": [
+        [
+          0,
+          "#4666bc"
+        ],
+        [
+          88,
+          "#5cb8f0"
+        ],
+        [
+          175,
+          "#7862c2"
+        ]
+      ]
+    },
+    "foreground": {
+      "luma": 161,
+      "stripe": 94,
+      "stripe_peak": 0.48,
+      "anchors": [
+        [
+          16,
+          "#f4ec70"
+        ],
+        [
+          48,
+          "#8edba0"
+        ],
+        [
+          88,
+          "#98d4f4"
+        ],
+        [
+          136,
+          "#ecc6ec"
+        ],
+        [
+          161,
+          "#f29cc4"
+        ]
+      ]
+    }
+  },
+  "black_and_white": "grey = luma of the kind (a property of the signal, not of the colours); the background is 0",
+  "stripes": "per kind: add stripe * cos(2 pi ((j + 0.5) / 4 - stripe_peak)) to R, G and B for sub-column j = 0..4 before the clamp; the background has none",
+  "basis": {
+    "source": "Atari Super Pong C-140 packaging art; palette and texture contract in docs/SPEC-superpong.md section 3",
+    "anchor_x": "the native clock columns of the elements the colours were read from: left paddle/wall X 16-19, left digits X 24-55, net X 88-91, right digits X 120-151, right paddle/wall X 160-163"
+  }
+}

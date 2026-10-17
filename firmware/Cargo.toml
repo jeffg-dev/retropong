@@ -1,0 +1,58 @@
+[workspace]
+# Deliberately its own workspace: this is a `no_std` embedded target with a
+# custom linker script, excluded from the root workspace (see the root
+# Cargo.toml's `exclude = ["firmware"]`).
+#
+# `logic/` (retrocontroller-firmware-logic) is a path dependency below but is
+# NOT a member here: it's a member of the ROOT workspace instead (so `cargo
+# test -p retrocontroller-firmware-logic` at the repo root builds it for the
+# host). Without this `exclude`, Cargo would treat `firmware/` (the nearest
+# ancestor Cargo.toml with a `[workspace]` table) as `logic`'s workspace and
+# fail because it isn't listed in `members` here; excluding it lets Cargo's
+# workspace search continue up to the root, where it *is* listed.
+resolver = "2"
+members = ["."]
+exclude = ["logic"]
+
+[package]
+name = "retrocontroller-firmware"
+description = "RetroController paddle firmware for the Seeed XIAO RP2350: USB composite HID gamepad + CDC-ACM serial protocol."
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+repository = "https://github.com/jeffg-dev/retropong"
+
+[dependencies]
+retrocontroller-protocol = { path = "../protocol" }
+retrocontroller-firmware-logic = { path = "logic" }
+
+embassy-rp = { version = "0.10.0", features = [
+    "rp235xa",
+    "time-driver",
+    "critical-section-impl",
+    "binary-info",
+    "executor-thread",
+] }
+embassy-executor = { version = "0.10.0" }
+embassy-usb = { version = "0.6.0" }
+embassy-time = { version = "0.5" }
+embassy-sync = { version = "0.8" }
+embassy-futures = { version = "0.1" }
+usbd-hid = "0.10"
+cortex-m = { version = "0.7", features = ["inline-asm"] }
+cortex-m-rt = "0.7.7"
+panic-halt = "1.0"
+static_cell = "2.1"
+
+[profile.release]
+opt-level = "z"
+lto = true
+debug = 2
+codegen-units = 1
+
+[profile.dev]
+opt-level = 1
+
+# See vendor/proc-macro-error2/PATCH.md for the single-line compatibility fix.
+[patch.crates-io]
+proc-macro-error2 = { path = "vendor/proc-macro-error2" }
