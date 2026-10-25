@@ -1,7 +1,8 @@
 //! RetroController firmware for the Seeed XIAO RP2350.
 //!
 //! Wires the hardware-free logic in `retrocontroller-firmware-logic` to real
-//! embassy-rp peripherals: two ADC channels (the paddles), a composite USB
+//! embassy-rp peripherals: two ADC channels (the paddles), two optional
+//! active-low button inputs, a composite USB
 //! HID gamepad + CDC-ACM serial device, the second-to-last-4K flash sector
 //! (calibration), and the on-board user LED. See `README.md` for the pin map
 //! and `/docs/SPEC-controller.md` for the protocol this implements.
@@ -25,7 +26,7 @@ use embassy_rp::adc::{
 };
 use embassy_rp::bind_interrupts;
 use embassy_rp::flash::Flash;
-use embassy_rp::gpio::{Level, Output, Pull};
+use embassy_rp::gpio::{Input, Level, Output, Pull};
 use embassy_rp::peripherals::USB;
 use embassy_rp::usb::{Driver as UsbDriver, InterruptHandler as UsbInterruptHandler};
 use embassy_sync::blocking_mutex::raw::CriticalSectionRawMutex;
@@ -42,6 +43,7 @@ use static_cell::StaticCell;
 use usbd_hid::descriptor::SerializedDescriptor;
 
 use retrocontroller_firmware_logic::buf::FixedBuf;
+use retrocontroller_firmware_logic::buttons::Buttons;
 use retrocontroller_firmware_logic::device::{format_stream_line, Device, Effect, Snapshot};
 use retrocontroller_firmware_logic::filter::AxisFilter;
 use retrocontroller_firmware_logic::hysteresis::{Hysteresis, Report as HysReport};
@@ -219,6 +221,12 @@ async fn main(_spawner: Spawner) {
     let mut ch_l = AdcChannel::new_pin(p.PIN_26, Pull::None);
     let mut ch_r = AdcChannel::new_pin(p.PIN_27, Pull::None);
 
+    // ---------- optional buttons (D2 = GPIO28 beside A0, D3 = GPIO5 beside A1) ----------
+    // Active-low against the internal pull-up, so an unwired pad just reads
+    // released (see `retrocontroller_firmware_logic::buttons`).
+    let btn_a0 = Input::new(p.PIN_28, Pull::Up);
+    let btn_a1 = Input::new(p.PIN_5, Pull::Up);
+
     // ---------- user LED (GPIO25, active-low) ----------
     let mut led = Output::new(p.PIN_25, Level::High);
 
@@ -302,23 +310,37 @@ async fn main(_spawner: Spawner) {
                     dev.observe_raw(raw_l, raw_r);
                     dev.cal.apply(raw_l, raw_r)
                 });
-                snapshot.lock(|s| *s.borrow_mut() = Snapshot { raw_l, raw_r, val_l, val_r });
+                snapshot.lock(|s| {
+                    let mut s = s.borrow_mut();
+                    (s.raw_l, s.raw_r, s.val_l, s.val_r) = (raw_l, raw_r, val_l, val_r);
+                });
             }
         }
     };
 
-    // ---------- HID report task: hysteresis + keep-alive at 1 kHz ----------
+    // ---------- HID report task: buttons + hysteresis + keep-alive at 1 kHz ----------
     let hid_in_fut = async {
         let mut hys_l = Hysteresis::new();
         let mut hys_r = Hysteresis::new();
+        let mut buttons = Buttons::new();
         let mut ticker = Ticker::every(Duration::from_millis(1));
         loop {
             ticker.next().await;
-            let snap = snapshot.lock(|s| *s.borrow());
+            buttons.update(btn_a0.is_low(), btn_a1.is_low());
+            let swap = device.lock(|d| d.borrow().cal.swap);
+            let btn = buttons.logical(swap);
+            let (snap, buttons_changed) = snapshot.lock(|s| {
+                let mut s = s.borrow_mut();
+                let changed = s.buttons.pressed != btn.pressed;
+                s.buttons = btn;
+                (*s, changed)
+            });
             let t = now_ms();
             let moved_l = hys_l.update(snap.val_l, t);
             let moved_r = hys_r.update(snap.val_r, t);
-            if moved_l.is_some() || moved_r.is_some() {
+            // A button edge is sent at once rather than waiting for the
+            // next knob movement or keep-alive.
+            if buttons_changed || moved_l.is_some() || moved_r.is_some() {
                 // A keep-alive report (fired at least every
                 // `hysteresis::KEEPALIVE_MS`, faster than the LED's own
                 // "recently" window) must NOT count as "the knob moved":
@@ -326,7 +348,8 @@ async fn main(_spawner: Spawner) {
                 // `LAST_HID_REPORT_MS`, otherwise the "moving" LED state
                 // (SPEC-controller.md §6) is permanently true once the host
                 // starts polling HID and the idle 1 Hz blink can never show.
-                let changed = matches!(moved_l, Some(HysReport::Changed(_)))
+                let changed = buttons_changed
+                    || matches!(moved_l, Some(HysReport::Changed(_)))
                     || matches!(moved_r, Some(HysReport::Changed(_)));
                 // Build the report from each axis's own last *reported*
                 // value, not the raw snapshot: only one axis's hysteresis may
@@ -334,12 +357,11 @@ async fn main(_spawner: Spawner) {
                 // other axis would put its still-unreported 1-LSB jitter on
                 // the wire verbatim, bypassing that axis's hysteresis
                 // (SPEC-controller.md §3 applies per axis). `last_reported()`
-                // is only `None` before the very first sample either axis has
-                // ever produced, which can't happen here since at least one
-                // `update` above just returned `Some` and therefore reported.
+                // is only `None` before an axis has ever reported; a button
+                // edge can get here first, so fall back to the snapshot.
                 let val_l = hys_l.last_reported().unwrap_or(snap.val_l);
                 let val_r = hys_r.last_reported().unwrap_or(snap.val_r);
-                let report = PaddleReport::new(val_l, val_r);
+                let report = PaddleReport::with_buttons(val_l, val_r, btn.pressed);
                 match hid_writer.write(&report.to_bytes()).await {
                     Ok(()) => {
                         if changed {

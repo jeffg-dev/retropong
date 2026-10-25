@@ -98,7 +98,7 @@ enum Command {
     Devices,
     /// Print the controller's `INFO` line.
     Info,
-    /// Live bar-graph view of both knobs via the serial `STREAM` command.
+    /// Live bar-graph view of both knobs and buttons via the serial `STREAM` command.
     Monitor {
         /// Print raw protocol lines instead of bar graphs.
         #[arg(long)]
@@ -663,6 +663,19 @@ fn bar(value: u16, width: usize) -> String {
 
 const BAR_WIDTH: usize = 30;
 
+/// One button's monitor cell: `[X]` pressed, `[ ]` wired (pressed since the
+/// controller booted) and released, `[?]` not yet seen -- possibly unwired,
+/// since an absent button can't be told from an idle one until pressed.
+fn button_cell(buttons: serial::Buttons, bit: u8) -> &'static str {
+    if buttons.pressed & bit != 0 {
+        "[X]"
+    } else if buttons.seen & bit != 0 {
+        "[ ]"
+    } else {
+        "[?]"
+    }
+}
+
 fn install_ctrlc_flag() -> Result<Arc<AtomicBool>> {
     let stop = Arc::new(AtomicBool::new(false));
     let flag = stop.clone();
@@ -679,7 +692,9 @@ fn cmd_monitor(raw: bool) -> Result<()> {
     }
 
     let stop = install_ctrlc_flag()?;
-    eprintln!("Streaming both knobs (Ctrl-C to stop)...");
+    eprintln!(
+        "Streaming both knobs and buttons (Ctrl-C to stop; [?] = button not pressed yet, maybe unwired)..."
+    );
 
     let result = (|| -> Result<()> {
         while !stop.load(Ordering::SeqCst) {
@@ -689,8 +704,13 @@ fn cmd_monitor(raw: bool) -> Result<()> {
                     if raw {
                         println!("{line}");
                     } else if let Some(sample) = serial::StreamSample::parse(&line) {
+                        // Older firmware sends no button fields at all.
+                        let (bl, br) = match sample.buttons {
+                            Some(b) => (button_cell(b, hid::BUTTON_LEFT), button_cell(b, hid::BUTTON_RIGHT)),
+                            None => ("", ""),
+                        };
                         print!(
-                            "\rL [{}] {:>4}   R [{}] {:>4}   ",
+                            "\rL [{}] {:>4} {bl}   R [{}] {:>4} {br}   ",
                             bar(sample.left, BAR_WIDTH),
                             sample.left,
                             bar(sample.right, BAR_WIDTH),
@@ -719,12 +739,15 @@ fn cmd_test() -> Result<()> {
         if let Some(r) = device::read_latest_report(&dev)? {
             last = r;
         }
+        let held = |bit| if last.buttons & bit != 0 { "[X]" } else { "[ ]" };
         print!(
-            "\rX [{}] {:>4}   Y [{}] {:>4}   ",
+            "\rX [{}] {:>4} {}   Y [{}] {:>4} {}   ",
             bar(last.x, BAR_WIDTH),
             last.x,
+            held(hid::BUTTON_LEFT),
             bar(last.y, BAR_WIDTH),
             last.y,
+            held(hid::BUTTON_RIGHT),
         );
         let _ = std::io::stdout().flush();
         std::thread::sleep(Duration::from_millis(33));
@@ -1026,6 +1049,15 @@ fn install_udev_rules() -> Result<()> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn button_cells_distinguish_pressed_wired_and_unseen() {
+        let b = serial::Buttons { pressed: hid::BUTTON_LEFT, seen: hid::BUTTON_LEFT };
+        assert_eq!(button_cell(b, hid::BUTTON_LEFT), "[X]");
+        assert_eq!(button_cell(b, hid::BUTTON_RIGHT), "[?]");
+        let released = serial::Buttons { pressed: 0, ..b };
+        assert_eq!(button_cell(released, hid::BUTTON_LEFT), "[ ]");
+    }
 
     #[test]
     fn is_ok_response_matches_case_insensitively() {

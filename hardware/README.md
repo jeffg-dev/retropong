@@ -109,5 +109,6 @@ logical player’s direction independently.
    across its pot's lug 1 and lug 2 along with the wires.
 3. Mount, plug in, run `cargo run -p rcctl -- flash`, then
    `cargo run -p rcctl -- monitor` to see both knobs move, and
-   `cargo run -p rcctl -- calibrate` once to learn the end stops. (The
-   firmware doesn't read the buttons yet.)
+   `cargo run -p rcctl -- calibrate` once to learn the end stops. Press each
+   button in `monitor`: its `[?]` turns into `[X]`. The buttons are optional;
+   leaving them out just leaves their HID bits at 0.

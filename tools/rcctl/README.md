@@ -142,9 +142,12 @@ version, protocol version, board, UID, axis count/range).
 
 ### `rcctl monitor [--raw]`
 
-Turns on the serial `STREAM` (`STREAM ON`, 50 Hz `S l_raw r_raw l r`
+Turns on the serial `STREAM` (`STREAM ON`, 50 Hz `S l_raw r_raw l r btn seen`
 lines) and redraws a two-bar live view in place with `\r` (no TUI library
-needed). Ctrl-C stops it and sends `STREAM OFF` on the way out. `--raw`
+needed). Each bar is followed by its player's button: `[X]` pressed, `[ ]`
+released (pressed at least once since boot, so known to be wired), `[?]` not
+pressed yet -- possibly not wired, which is fine. Firmware without button
+support shows no button cells. Ctrl-C stops it and sends `STREAM OFF` on the way out. `--raw`
 prints the protocol lines verbatim instead of bars.
 
 ### `rcctl test`

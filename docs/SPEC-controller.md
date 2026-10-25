@@ -15,6 +15,7 @@ normative source for numbers.
 | Pots (×2) | Bourns/Vishay-style **95A1A-B28-B15L**: 10 kΩ, linear taper, conductive plastic, solder lugs, ~300° travel |
 | Wiring | Pot 1 (left player): lug 1 → GND, lug 2 (wiper) → **A0**, lug 3 → **3V3**. Pot 2 (right player): lug 1 → GND, lug 2 → **A1**, lug 3 → 3V3. |
 | Optional | 100 nF ceramic from each wiper to GND, close to the XIAO, for extra noise immunity. |
+| Optional | Two momentary NO buttons, each from its pad to GND: left beside pot 1 → **D2**, right beside pot 2 → **D3**. |
 
 Board pin mapping used by the firmware (see `hardware/README.md` for the full
 pinout and photos):
@@ -23,6 +24,8 @@ pinout and photos):
 |----------|----------|-------------|-------------|
 | Left knob | A0 / D0 | GPIO26 | ADC0 |
 | Right knob | A1 / D1 | GPIO27 | ADC1 |
+| Left button (optional) | A2 / D2 | GPIO28 (pull-up, active-low) | — |
+| Right button (optional) | D3 | GPIO5 (pull-up, active-low) | — |
 | User LED (heartbeat) | on-board | GPIO25 (active-low) | — |
 | RGB LED (unused) | on-board WS2812 | data GPIO22, power-enable GPIO23 | — |
 
@@ -82,9 +85,21 @@ items rather than the one combined `Report Count (2)` item shown above; same
 report layout)
 
 Input report (no report ID), 5 bytes little-endian: `x:u16 y:u16 buttons:u8`.
-`x` = left knob, `y` = right knob, `0..=4095`. Buttons are always 0 for now.
-The device sends a report every 1 ms when a value changed and at least every
-50 ms regardless (keep-alive so hosts see a live device).
+`x` = left knob, `y` = right knob, `0..=4095`. Button bit 0 (HID Button 1) is
+the left player's button and bit 1 (Button 2) the right's, 1 = pressed; bits
+2–7 are always 0. The device sends a report every 1 ms when a value changed
+(a button edge is sent on the next 1 ms tick) and at least every 50 ms
+regardless (keep-alive so hosts see a live device).
+
+Buttons are optional. They switch to GND against the internal pull-up, so a
+pad with no button wired reads exactly like an idle button and its bit just
+stays 0. The firmware samples both at 1 kHz and accepts a level after 5
+agreeing samples (5 ms debounce). A pad must read released for that long
+before any press counts, so a pad held low from boot (button held while
+plugging in, or tied to GND) reports released. A button is *seen* once it has
+been pressed since boot; that is the only way to tell a wired button from an
+absent one. Buttons follow the wheel assignment: with `swap` set, the D3
+button reports as the left player's, like the A1 knob.
 
 ## 3. Sampling and filtering
 
@@ -149,7 +164,10 @@ Text lines over CDC-ACM, see the table in `protocol/src/lib.rs` (module
   only *sends* (responses and stream lines) while DTR is asserted, so an
   unattended port can never stall the device. Baud rate is ignored.
 * Every command yields exactly one `OK …` or `ERR …` line. `STREAM ON` adds
-  `S l_raw r_raw l r` lines at 50 Hz until `STREAM OFF` or the port closes.
+  `S l_raw r_raw l r btn seen` lines at 50 Hz until `STREAM OFF` or the port
+  closes. `btn`/`seen` are the button bitmasks (pressed now / pressed since
+  boot); older firmware omits them and hosts accept lines without them.
+* `BTN` → `OK BTN <btn> <seen>`; older firmware answers `ERR unknown command`.
 * `INFO` → `OK INFO name=RetroController fw=<semver> proto=1 board=xiao-rp2350 uid=<16 hex> axes=2 max=4095`
 * `BOOTSEL` → replies `OK BOOTSEL`, flushes, then reboots into the ROM USB
   bootloader (`RP2350` mass-storage volume) so the toolkit can flash without
@@ -209,8 +227,8 @@ because the device reboots about 500 ms after the final block.
 | `rcctl flash [--elf PATH] [--no-build] [--no-bootsel] [--volume PATH] [--uf2-out PATH] [--abs-block] [--firmware-dir PATH]` | Build (unless told not to), convert, ask the device to reboot to BOOTSEL, wait for the volume, copy, wait for the device to come back |
 | `rcctl devices` | List RetroController serial ports and HID devices, and any `RP2350` bootloader volumes |
 | `rcctl info` | Print the `INFO` line |
-| `rcctl monitor [--raw]` | Live bar graph of both knobs (serial `STREAM`) |
-| `rcctl test` | Read HID reports directly (what games see) |
+| `rcctl monitor [--raw]` | Live bar graph of both knobs and buttons (serial `STREAM`) |
+| `rcctl test` | Read HID reports directly (what games see), including buttons |
 | `rcctl calibrate` | Interactive: `CAL START`, ask user to sweep both knobs, `CAL STOP`, show, confirm, `CAL SAVE` |
 | `rcctl cal show/reset/set/invert` | Direct calibration commands |
 | `rcctl bootsel` / `rcctl reboot` | Reboot commands |

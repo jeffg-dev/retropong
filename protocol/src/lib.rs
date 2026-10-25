@@ -39,8 +39,9 @@ pub mod usb {
 ///
 /// The device enumerates as a *Game Pad* (Generic Desktop usage 0x05) with two
 /// 16-bit absolute axes (X = left knob, Y = right knob) and eight buttons.
-/// There are no physical buttons; the button byte exists so generic gamepad
-/// libraries recognise the device, and for future expansion.
+/// Bits [`BUTTON_LEFT`] and [`BUTTON_RIGHT`] carry the optional momentary
+/// buttons, in logical (post-swap) player order; the other bits are always 0.
+/// A controller wired without buttons simply never sets them.
 pub mod hid {
     /// Maximum logical axis value. Axes run `0..=AXIS_MAX`.
     pub const AXIS_MAX: u16 = 4095;
@@ -48,6 +49,10 @@ pub mod hid {
     pub const REPORT_LEN: usize = 5;
     /// HID poll interval requested in the endpoint descriptor, in ms.
     pub const POLL_MS: u8 = 1;
+    /// Button bit for the left player's button (HID Button 1).
+    pub const BUTTON_LEFT: u8 = 1 << 0;
+    /// Button bit for the right player's button (HID Button 2).
+    pub const BUTTON_RIGHT: u8 = 1 << 1;
 
     /// One input report. Little-endian on the wire: `x_lo x_hi y_lo y_hi buttons`.
     #[derive(Clone, Copy, Debug, PartialEq, Eq, Default)]
@@ -56,13 +61,17 @@ pub mod hid {
         pub x: u16,
         /// Right knob, `0..=AXIS_MAX`. 0 = fully counter-clockwise.
         pub y: u16,
-        /// Button bitmask, currently always 0.
+        /// Button bitmask ([`BUTTON_LEFT`], [`BUTTON_RIGHT`]); 1 = pressed.
         pub buttons: u8,
     }
 
     impl PaddleReport {
         pub const fn new(x: u16, y: u16) -> Self {
             Self { x, y, buttons: 0 }
+        }
+
+        pub const fn with_buttons(x: u16, y: u16, buttons: u8) -> Self {
+            Self { x, y, buttons }
         }
 
         pub fn to_bytes(&self) -> [u8; REPORT_LEN] {
@@ -238,7 +247,8 @@ pub mod cal {
 /// | `INFO`                          | `OK INFO name=<s> fw=<semver> proto=<n> board=<s> uid=<hex> axes=2 max=4095` |
 /// | `RAW`                           | `OK RAW <l_raw> <r_raw>` (16-bit oversampled ADC)           |
 /// | `VAL`                           | `OK VAL <l> <r>` (calibrated 0..4095, what HID reports)     |
-/// | `STREAM ON` / `STREAM OFF`      | `OK STREAM ON|OFF`; then `S <l_raw> <r_raw> <l> <r>` at [`STREAM_HZ`] |
+/// | `STREAM ON` / `STREAM OFF`      | `OK STREAM ON|OFF`; then `S <l_raw> <r_raw> <l> <r> <btn> <seen>` at [`STREAM_HZ`] |
+/// | `BTN`                           | `OK BTN <btn> <seen>` (button bitmasks: pressed now, ever pressed since boot) |
 /// | `CAL SHOW`                      | `OK CAL <lmin> <lmax> <rmin> <rmax> <linv> <rinv> <saved> <swap>`  |
 /// | `CAL START`                     | `OK CAL START` (begins learning min/max from live raw)      |
 /// | `CAL STOP`                      | `OK CAL <...>` (adopts learned range into the live cal) / `ERR calibration` (nothing learned, or too small) / `ERR not learning` (no `CAL START` in progress) |
@@ -269,6 +279,7 @@ pub mod serial {
         Info,
         Raw,
         Val,
+        Buttons,
         Stream(bool),
         CalShow,
         CalStart,
@@ -329,6 +340,8 @@ pub mod serial {
             Command::Raw
         } else if eq_ic(kw, "VAL") {
             Command::Val
+        } else if eq_ic(kw, "BTN") {
+            Command::Buttons
         } else if eq_ic(kw, "STREAM") {
             Command::Stream(parse_bool(it.next())?)
         } else if eq_ic(kw, "CAL") {
@@ -375,13 +388,45 @@ pub mod serial {
         Ok(cmd)
     }
 
-    /// A parsed unsolicited stream line `S <l_raw> <r_raw> <l> <r>`.
+    /// Button state as bitmasks of [`super::hid::BUTTON_LEFT`]/[`super::hid::BUTTON_RIGHT`],
+    /// in logical (post-swap) player order.
+    ///
+    /// Buttons are optional and switch to GND against an internal pull-up, so
+    /// an absent button is indistinguishable from an idle one until pressed:
+    /// `seen` marks the buttons that have been pressed at least once since
+    /// boot, i.e. are known to be wired.
+    #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+    pub struct Buttons {
+        pub pressed: u8,
+        pub seen: u8,
+    }
+
+    impl Buttons {
+        /// Parses the `<btn> <seen>` fields of a `BTN` response or `S` line.
+        fn parse<'a>(mut it: impl Iterator<Item = &'a str>) -> Option<Self> {
+            let mut n = || it.next()?.parse::<u8>().ok();
+            Some(Self { pressed: n()?, seen: n()? })
+        }
+
+        /// Parses an `OK BTN <btn> <seen>` response.
+        pub fn parse_response(line: &str) -> Option<Self> {
+            let mut it = line.trim().split_ascii_whitespace();
+            if !eq_ic(it.next()?, "OK") || !eq_ic(it.next()?, "BTN") {
+                return None;
+            }
+            Self::parse(it)
+        }
+    }
+
+    /// A parsed unsolicited stream line `S <l_raw> <r_raw> <l> <r> [<btn> <seen>]`.
     #[derive(Clone, Copy, Debug, PartialEq, Eq)]
     pub struct StreamSample {
         pub left_raw: u16,
         pub right_raw: u16,
         pub left: u16,
         pub right: u16,
+        /// `None` from firmware that predates button support.
+        pub buttons: Option<Buttons>,
     }
 
     impl StreamSample {
@@ -391,7 +436,8 @@ pub mod serial {
                 return None;
             }
             let mut n = || it.next()?.parse::<u16>().ok();
-            Some(Self { left_raw: n()?, right_raw: n()?, left: n()?, right: n()? })
+            let (left_raw, right_raw, left, right) = (n()?, n()?, n()?, n()?);
+            Some(Self { left_raw, right_raw, left, right, buttons: Buttons::parse(it) })
         }
     }
 
@@ -445,6 +491,9 @@ mod tests {
         // Out-of-range values are clamped on both paths.
         assert_eq!(PaddleReport::new(60000, 0).to_bytes()[..2], [0xff, 0x0f]);
         assert_eq!(PaddleReport::from_bytes(&[0xff, 0xff, 0, 0, 0]).unwrap().x, AXIS_MAX);
+        let pressed = PaddleReport::with_buttons(1, 2, BUTTON_LEFT | BUTTON_RIGHT);
+        assert_eq!(pressed.to_bytes()[4], 3);
+        assert_eq!(PaddleReport::from_bytes(&pressed.to_bytes()), Some(pressed));
     }
 
     #[test]
@@ -549,8 +598,15 @@ mod tests {
     fn parses_stream_and_cal_lines() {
         assert_eq!(
             StreamSample::parse("S 100 200 6 12\r\n"),
-            Some(StreamSample { left_raw: 100, right_raw: 200, left: 6, right: 12 })
+            Some(StreamSample { left_raw: 100, right_raw: 200, left: 6, right: 12, buttons: None })
         );
+        assert_eq!(
+            StreamSample::parse("S 100 200 6 12 1 3").unwrap().buttons,
+            Some(Buttons { pressed: 1, seen: 3 })
+        );
+        assert_eq!(Buttons::parse_response("OK BTN 2 2\n"), Some(Buttons { pressed: 2, seen: 2 }));
+        assert_eq!(Buttons::parse_response("ERR unknown command"), None);
+        assert_eq!(parse_command("btn"), Ok(Command::Buttons));
         assert_eq!(StreamSample::parse("OK RAW 1 2"), None);
         let cl = CalLine::parse("OK CAL 1000 64535 1000 64535 0 1 1").unwrap();
         assert!(cl.saved);

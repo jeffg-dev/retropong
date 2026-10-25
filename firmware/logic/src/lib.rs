@@ -16,6 +16,7 @@
 //! - [`device`]: the command handler ([`device::Device::handle`]) and the
 //!   stream line formatter.
 //! - [`line`]: byte-stream line reassembly for the serial protocol.
+//! - [`buttons`]: optional button debouncing and wiring detection.
 //! - [`led`]: user LED pattern selection (SPEC §6).
 //! - [`buf`]: a tiny fixed-capacity `core::fmt::Write` sink used by the
 //!   command handler's callers (tests here, and the firmware binary).
@@ -24,6 +25,7 @@
 #![deny(unsafe_code)]
 
 pub mod buf;
+pub mod buttons;
 pub mod calibration;
 pub mod device;
 pub mod filter;

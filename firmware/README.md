@@ -91,7 +91,7 @@ Priority when several could apply: not-configured > learning > moving > idle
 
 CDC-ACM, 115200-8-N-1 (baud is ignored; the host must assert DTR). One
 `OK ...`/`ERR ...` line per command; `STREAM ON` additionally starts
-unsolicited `S l_raw r_raw l r` lines at `retrocontroller_protocol::serial::STREAM_HZ`
+unsolicited `S l_raw r_raw l r btn seen` lines at `retrocontroller_protocol::serial::STREAM_HZ`
 (50 Hz) until `STREAM OFF` or disconnect. See the table in
 `retrocontroller_protocol::serial` (also reproduced in
 `/docs/SPEC-controller.md` §5) for every command and its exact response, and

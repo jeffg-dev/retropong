@@ -1,6 +1,6 @@
 //! The HID gamepad input report (SPEC-controller.md §2.1): two 16-bit
-//! absolute axes (`0..=4095`) plus an 8-bit button mask (always 0; no
-//! physical buttons, kept for generic gamepad library compatibility).
+//! absolute axes (`0..=4095`) plus an 8-bit button mask (bits 0/1: the
+//! optional left/right buttons; the rest always 0).
 //!
 //! `usbd_hid`'s `gen_hid_descriptor` macro generates X and Y as two separate
 //! 16-bit `Input` items (each its own `Report Count 1`), rather than one

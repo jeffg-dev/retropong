@@ -7,7 +7,7 @@ use core::fmt::Write;
 
 use retrocontroller_protocol::cal::{AxisCal, Calibration};
 use retrocontroller_protocol::hid::AXIS_MAX;
-use retrocontroller_protocol::serial::{self, Command, Knob};
+use retrocontroller_protocol::serial::{self, Buttons, Command, Knob};
 use retrocontroller_protocol::PROTOCOL_VERSION;
 
 use crate::calibration::Learner;
@@ -45,6 +45,8 @@ pub struct Snapshot {
     pub val_l: u16,
     /// Right knob, calibrated (`0..=AXIS_MAX`).
     pub val_r: u16,
+    /// Debounced buttons, logical order (see [`crate::buttons`]).
+    pub buttons: Buttons,
 }
 
 /// A side effect for the firmware binary to carry out after [`Device::handle`]
@@ -174,6 +176,10 @@ impl Device {
             }
             Command::Val => {
                 let _ = writeln!(out, "OK VAL {} {}", state.val_l, state.val_r);
+                Effect::None
+            }
+            Command::Buttons => {
+                let _ = writeln!(out, "OK BTN {} {}", state.buttons.pressed, state.buttons.seen);
                 Effect::None
             }
             Command::Stream(on) => {
@@ -326,9 +332,13 @@ impl Device {
     }
 }
 
-/// Formats the unsolicited `STREAM` line: `S l_raw r_raw l r`.
+/// Formats the unsolicited `STREAM` line: `S l_raw r_raw l r btn seen`.
 pub fn format_stream_line(state: &Snapshot, out: &mut impl Write) {
-    let _ = writeln!(out, "S {} {} {} {}", state.raw_l, state.raw_r, state.val_l, state.val_r);
+    let _ = writeln!(
+        out,
+        "S {} {} {} {} {} {}",
+        state.raw_l, state.raw_r, state.val_l, state.val_r, state.buttons.pressed, state.buttons.seen
+    );
 }
 
 #[cfg(test)]
@@ -343,7 +353,13 @@ mod tests {
     }
 
     fn snapshot() -> Snapshot {
-        Snapshot { raw_l: 12345, raw_r: 54321, val_l: 111, val_r: 222 }
+        Snapshot {
+            raw_l: 12345,
+            raw_r: 54321,
+            val_l: 111,
+            val_r: 222,
+            buttons: Buttons { pressed: 1, seen: 3 },
+        }
     }
 
     fn run(d: &mut Device, line: &str) -> (heapless_line::Line, Effect) {
@@ -390,6 +406,8 @@ mod tests {
         assert_eq!(line.as_str(), "OK RAW 12345 54321\n");
         let (line, _) = run(&mut d, "VAL");
         assert_eq!(line.as_str(), "OK VAL 111 222\n");
+        let (line, _) = run(&mut d, "BTN");
+        assert_eq!(line.as_str(), "OK BTN 1 3\n");
     }
 
     #[test]
@@ -709,19 +727,21 @@ mod tests {
         let mut d = device();
         d.cal.swap = true;
         let (val_l, val_r) = d.cal.apply(1000, 64535);
-        let sample = Snapshot { raw_l: 1000, raw_r: 64535, val_l, val_r };
+        let sample = Snapshot { raw_l: 1000, raw_r: 64535, val_l, val_r, buttons: Buttons::default() };
         let mut out: FixedBuf<160> = FixedBuf::new();
         d.handle(Command::Val, &sample, &mut out);
         assert_eq!(out.as_str(), "OK VAL 4095 0\n");
         let mut out: FixedBuf<160> = FixedBuf::new();
         format_stream_line(&sample, &mut out);
-        assert_eq!(out.as_str(), "S 1000 64535 4095 0\n");
+        assert_eq!(out.as_str(), "S 1000 64535 4095 0 0 0\n");
     }
 
     #[test]
     fn stream_line_format() {
         let mut buf: FixedBuf<64> = FixedBuf::new();
         format_stream_line(&snapshot(), &mut buf);
-        assert_eq!(buf.as_str(), "S 12345 54321 111 222\n");
+        assert_eq!(buf.as_str(), "S 12345 54321 111 222 1 3\n");
+        let old = serial::StreamSample::parse(buf.as_str()).unwrap();
+        assert_eq!(old.buttons, Some(Buttons { pressed: 1, seen: 3 }));
     }
 }
