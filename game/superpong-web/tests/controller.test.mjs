@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import {
   axisPosition,
   decodeHidReport,
+  padCommands,
   selectGamepad,
   ControllerInput,
 } from "../public/controller.js";
@@ -70,6 +71,16 @@ test("HID little endian report maps two 12-bit axes and button bits", () => {
   });
   assert.equal(decodeHidReport(new DataView(new ArrayBuffer(4))), null);
 });
+test("RetroController buttons go to the core menu; other pads use the standard mapping", () => {
+  const retro = { retro: true };
+  assert.equal(padCommands(retro, 1, false), 128);
+  assert.equal(padCommands(retro, 2, true), 256);
+  assert.equal(padCommands(retro, 3, true), 128 | 256);
+  const pad = { retro: false };
+  assert.equal(padCommands(pad, 1, false), 0);
+  assert.equal(padCommands(pad, 1, true), 64);
+  assert.equal(padCommands(pad, 2 | (1 << 9) | (1 << 13), false), 2 | 1 | 8);
+});
 test("gamepad prefers RetroController and ignores disconnected devices", () => {
   const generic = { id: "Xbox", axes: [0, 0] };
   const retro = { id: "1209-0001-RetroController", axes: [-1, 1] };
@@ -87,6 +98,7 @@ test("already attached gamepad connects on init and disconnects exactly once", a
   await h.input.init();
   assert.deepEqual(h.input.poll(), {
     id: "gamepad:0:RetroController",
+    retro: true,
     left: 0,
     right: 1,
     buttons: 1,

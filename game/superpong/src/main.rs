@@ -239,7 +239,13 @@ async fn amain(cli: Cli) {
         };
         commands.extend(input_manager.take_buttons().into_iter().filter_map(pad_command));
 
-        for command in commands {
+        // Controller buttons mean what the menu makes them as each press
+        // arrives (SPEC §13.6), so they are mapped after the other commands.
+        let paddle_buttons = input_manager.take_paddle_buttons().into_iter().map(Err);
+        for next in commands.into_iter().map(Ok).chain(paddle_buttons) {
+            let Some(command) = next.map_or_else(|button| menu.paddle_command(button), Some) else {
+                continue;
+            };
             match menu.command(command, &mut settings, &console.status()) {
                 Action::None => {}
                 Action::Select(kind) => scheduler.select_now(&mut console, kind),

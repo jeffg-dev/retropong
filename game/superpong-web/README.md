@@ -21,7 +21,8 @@ granted devices reconnect automatically. The native font and palette also supply
 The native power-on screen appears after loading. **Enter** starts/restarts,
 **Escape** opens/closes the native menu, arrows navigate, and Enter selects.
 The gamepad Start button opens the menu; its D-pad navigates, South selects,
-and East closes. Both knobs retain the same direction and full travel as the
+and East closes. The RetroController's own optional buttons also drive the
+menu: left opens it and selects, right moves to the next entry and wraps. Both knobs retain the same direction and full travel as the
 controller's native HID readings. Disconnecting pauses play; reconnecting returns
 to the native menu so you can resume with the usual countdown.
 

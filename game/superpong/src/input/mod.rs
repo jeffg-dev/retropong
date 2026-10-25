@@ -1,6 +1,7 @@
 //! Physical knob sources: RetroController HID, then gamepad, otherwise centred.
 mod gamepad;
 mod hid;
+use crate::menu::PaddleButton;
 use crate::settings::Settings;
 pub use gamepad::GamepadSource;
 pub use hid::HidSource;
@@ -19,5 +20,9 @@ impl InputManager {
     }
     pub fn take_buttons(&mut self) -> Vec<gilrs::Button> {
         self.gamepad.take_pressed()
+    }
+    /// The RetroController's own button presses, read over hidapi.
+    pub fn take_paddle_buttons(&mut self) -> Vec<PaddleButton> {
+        self.hid.take_pressed()
     }
 }

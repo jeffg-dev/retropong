@@ -1,10 +1,13 @@
 //! RetroController knob source: reads the paddle controller's USB HID
 //! report directly via `hidapi`. Highest-priority input source when present.
+//! Also yields presses of its optional buttons, for the menu.
 
 use std::time::{Duration, Instant};
 
 use hidapi::{HidApi, HidDevice};
-use retrocontroller_protocol::hid::PaddleReport;
+use retrocontroller_protocol::hid::{PaddleReport, BUTTON_LEFT, BUTTON_RIGHT};
+
+use crate::menu::PaddleButton;
 use retrocontroller_protocol::usb::{PID, VID};
 
 /// How often we retry enumeration while no device is open.
@@ -18,6 +21,10 @@ pub struct HidSource {
     api: Option<HidApi>,
     device: Option<HidDevice>,
     last: (f32, f32),
+    /// Button bits of the last report read, for press edges.
+    buttons: u8,
+    /// Presses since the last [`HidSource::take_pressed`], oldest first.
+    pressed: Vec<PaddleButton>,
     next_probe: Instant,
     /// Human-readable reason the source is unavailable, for diagnostics. Only
     /// ever set for a real failure (a `HidApi`/backend error, a permission
@@ -40,8 +47,15 @@ impl HidSource {
                 None
             }
         };
-        let mut source =
-            Self { api, device: None, last: (0.5, 0.5), next_probe: Instant::now(), unavailable_reason };
+        let mut source = Self {
+            api,
+            device: None,
+            last: (0.5, 0.5),
+            buttons: 0,
+            pressed: Vec::new(),
+            next_probe: Instant::now(),
+            unavailable_reason,
+        };
         source.try_connect();
         source
     }
@@ -93,6 +107,7 @@ impl HidSource {
                     return;
                 }
                 self.device = Some(dev);
+                self.buttons = 0;
                 self.unavailable_reason = None;
             }
             Err(e) => {
@@ -121,6 +136,10 @@ impl HidSource {
                 Ok(0) => break,
                 Ok(n) => {
                     if let Some(report) = PaddleReport::from_bytes(&buf[..n]) {
+                        // Every report, not just the latest: the firmware
+                        // sends one per button edge, and a quick tap can
+                        // start and end within one frame.
+                        self.buttons = record_presses(self.buttons, report.buttons, &mut self.pressed);
                         latest = Some(report);
                     }
                 }
@@ -136,5 +155,37 @@ impl HidSource {
             self.last = (report.x_unit(), report.y_unit());
         }
         Some(self.last)
+    }
+
+    /// The controller buttons pressed since the last call, oldest first.
+    pub fn take_pressed(&mut self) -> Vec<PaddleButton> {
+        std::mem::take(&mut self.pressed)
+    }
+}
+
+/// Appends the buttons newly down in `now` (relative to `before`) to
+/// `pressed` and returns `now`.
+fn record_presses(before: u8, now: u8, pressed: &mut Vec<PaddleButton>) -> u8 {
+    let down = now & !before;
+    for (bit, button) in [(BUTTON_LEFT, PaddleButton::Left), (BUTTON_RIGHT, PaddleButton::Right)] {
+        if down & bit != 0 {
+            pressed.push(button);
+        }
+    }
+    now
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn presses_are_rising_edges_in_report_order() {
+        let mut pressed = Vec::new();
+        let mut bits = 0;
+        for report in [BUTTON_LEFT, BUTTON_LEFT, 0, BUTTON_RIGHT, BUTTON_RIGHT | BUTTON_LEFT, 0x80] {
+            bits = record_presses(bits, report, &mut pressed);
+        }
+        assert_eq!(pressed, [PaddleButton::Left, PaddleButton::Right, PaddleButton::Left]);
     }
 }

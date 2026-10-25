@@ -29,7 +29,9 @@ keyboard shortcuts are removed; knobs stay centred without a controller.
 ## The pause menu
 
 `Esc` (or a gamepad's Start button) opens the pause menu, over a game or over
-the light show. The original console had no pause, menu or volume control; this
+the light show. On a RetroController with buttons, the left button opens the
+menu and activates the entry under the cursor; the right button steps to the
+next entry, wrapping at the bottom. The original console had no pause, menu or volume control; this
 is an addition. While the menu is open the console is frozen (the light show
 stops too) and the sound is cut off. The menu is drawn as cells on the console's
 own raster, in its cell kinds, so it takes the game's colours, the

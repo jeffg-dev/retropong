@@ -74,7 +74,9 @@ palette and shader. Enter starts/restarts or activates a menu item, Escape toggl
 the menu, and arrows navigate. Paddle keyboard controls are intentionally absent.
 Startup hints disappear after the first start. Countdown keeps the simulation
 frozen but previews live knob positions. Never let the Enter that resumes also
-restart the match.
+restart the match. The controller's left button opens the menu/activates (like
+Enter in the menu, never a Start); the right button steps down and wraps. Both
+games map them through `Menu::paddle_command`, not as generic gamepad buttons.
 
 The web connection screen is static: only a large native RETROPONG banner and
 CONNECT CONTROLLER / & TURN KNOB, with no scores, paddles or animated background.
@@ -93,8 +95,11 @@ wiring correction, so reversed wiring/firmware inversion changes this convention
 
 The XIAO samples two 10 kΩ linear pots with oversampling/filtering and sends a
 5-byte HID report (X and Y little-endian u16, then buttons), axes 0..4095, at
-1 kHz. CDC serial provides diagnostics and calibration; firmware buttons are
-not yet sampled even though the HID descriptor includes a button byte.
+1 kHz. CDC serial provides diagnostics and calibration. The two momentary
+buttons (D2/D3, active-low, internal pull-up) are optional: unwired pads read
+released, and a button counts as present only once pressed. They are debounced
+in firmware, set HID bits 0/1 in logical order (following wheel swap), and
+appear in `BTN` and appended stream fields that older hosts ignore.
 
 Calibration remains attached to physical A0/A1 inputs. Apply each physical
 axis's range/inversion before routing the calibrated values to logical left/right.

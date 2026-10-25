@@ -1,4 +1,4 @@
-import { ControllerInput } from "./controller.js";
+import { ControllerInput, padCommands } from "./controller.js";
 import { AudioPlayer } from "./audio.js";
 import { createRenderer } from "./renderer.js";
 import { SettingsStore } from "./settings.js";
@@ -163,13 +163,7 @@ function frame(now) {
   if (state === "playing" && pad) {
     const pressed = pad.buttons & ~previousButtons;
     previousButtons = pad.buttons;
-    if (pressed & (1 << 9)) commands |= 1;
-    if (pressed & (1 << 1)) commands |= 2;
-    if (pressed & (1 << 12)) commands |= 4;
-    if (pressed & (1 << 13)) commands |= 8;
-    if (pressed & (1 << 14)) commands |= 16;
-    if (pressed & (1 << 15)) commands |= 32;
-    if (pressed & 1 && core.menu_open()) commands |= 64;
+    commands |= padCommands(pad, pressed, core.menu_open());
     const running = core.runs_console();
     const sound = core.advance(delta, pad.left, pad.right, commands);
     commands = 0;

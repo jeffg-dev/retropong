@@ -57,6 +57,30 @@ test(
 );
 
 test(
+  "built WASM maps RetroController buttons: left opens/activates, right cycles",
+  options,
+  async () => {
+    const g = await game();
+    g.advance(1 / 60, 0.5, 0.5, 64);
+    const frame = g.frame_number();
+    g.advance(0, 0.5, 0.5, 256);
+    assert.equal(g.menu_open(), 0, "right does nothing while closed");
+    g.advance(0, 0.5, 0.5, 128);
+    assert.equal(g.menu_open(), 1, "left opens the menu");
+    for (let i = 0; i < 8; i++) g.advance(0, 0.5, 0.5, 256);
+    g.advance(0, 0.5, 0.5, 128);
+    assert.equal(g.menu_open(), 0, "eight steps wrap back to RESUME");
+    assert.equal(g.runs_console(), 0, "resuming counts down");
+    assert.equal(g.frame_number(), frame, "left never restarts the match");
+    g.advance(0, 0.5, 0.5, 128);
+    assert.equal(g.menu_open(), 1, "left reopens during the countdown");
+    for (let i = 0; i < 3; i++) g.advance(0, 0.5, 0.5, 256);
+    g.advance(0, 0.5, 0.5, 128);
+    assert.equal(g.crt_enabled(), 0, "left acts on the selected CRT entry");
+  },
+);
+
+test(
   "built WASM native menu changes CRT and Exit Game signals the host",
   options,
   async () => {

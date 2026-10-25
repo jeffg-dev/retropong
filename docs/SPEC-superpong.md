@@ -844,6 +844,8 @@ The program is called **RetroPong**: window title, `--help`, the menu's title an
 
 **Pause.** `Esc` (or a pad's Start) opens the menu at any time, over a game or over the light show. While it is open the console is not ticked at all (the light show stops too), the sound playing is cut off, and the `--demo` autopilot does nothing. Arrow keys only navigate the menu. `Esc`, Start, a pad's East or `RESUME` closes it.
 
+**Controller buttons.** A RetroController's optional buttons (HID Buttons 1/2, logical left/right) drive the menu alone. The left button opens the menu when it is closed (also during the countdown) and activates the entry under the cursor when it is open, like `Enter`, so it resumes through `RESUME` and never Starts the console. The right button moves the cursor down one entry, wrapping from `EXIT GAME` to `RESUME`, and does nothing while the menu is closed. Each press is mapped with the menu as that press arrives. They are not also read as generic gamepad buttons.
+
 **Start and Select while paused.** The console is paused while the menu is open and during the countdown, and then `Enter` are never a console Start (§13.3): in the menu they activate, in the countdown they do nothing, since a Start kept for the first tick after the pause would restart the match at 0-0. A Start still buffered when the menu opens (pressed on the same frame as `Esc`) is dropped, and so is `--auto-start` while paused. A game mode is selected through the menu.
 
 **Countdown.** Closing the menu while a game is in progress (`Waiting` or `Rally`) does not restart the console at once:

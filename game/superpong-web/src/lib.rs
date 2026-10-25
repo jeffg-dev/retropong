@@ -1,7 +1,8 @@
 //! WebAssembly bridge using the native simulation, menu, font and scheduler.
 //! `init(1..=4)` powers on in attract mode. `advance(dt,left,right,commands)`
 //! processes one rendered frame: commands are toggle=1, back=2, up=4, down=8,
-//! left=16, right=32, activate=64. Returns the last native speaker event:
+//! left=16, right=32, activate=64, and the RetroController's own buttons
+//! paddle-left=128, paddle-right=256 (mapped by the menu). Returns the last native speaker event:
 //! bounce=1, point=2, serve=4, attract=8, or zero for silence/no new event.
 //! `render()` returns opaque RGBA in exported memory; reacquire memory.buffer
 //! after calls that may grow memory. Pixels remain valid until init/render.
@@ -34,7 +35,7 @@ mod audio {
 
 use canvas::Canvas;
 use menu::screen::{Countdown, MenuView, Overlay};
-use menu::{Action, Command, Menu};
+use menu::{Action, Command, Menu, PaddleButton};
 use scheduler::Scheduler;
 use settings::{DisplayMode, Settings};
 
@@ -85,6 +86,20 @@ impl WebGame {
         }
     }
 
+    /// Applies one menu command; `true` when it exits the game.
+    fn menu_command(&mut self, command: Command, sound: &mut u32) -> bool {
+        match self.menu.command(command, &mut self.settings, &self.console.status()) {
+            Action::None => {}
+            Action::Select(kind) => self.scheduler.select_now(&mut self.console, kind),
+            Action::Volume => *sound = 1,
+            Action::Exit => {
+                self.exit = true;
+                return true;
+            }
+        }
+        false
+    }
+
     // Same ordering as native main: sample pause state, buffer Start, handle
     // menu actions, advance countdown, run ticks, choose live paddle preview.
     fn advance(&mut self, dt: f32, left: f32, right: f32, commands: u32) -> u32 {
@@ -108,14 +123,18 @@ impl WebGame {
             if commands & bit == 0 || (bit > 2 && !was_open) {
                 continue;
             }
-            match self.menu.command(command, &mut self.settings, &self.console.status()) {
-                Action::None => {}
-                Action::Select(kind) => self.scheduler.select_now(&mut self.console, kind),
-                Action::Volume => sound = 1,
-                Action::Exit => {
-                    self.exit = true;
-                    return 0;
-                }
+            if self.menu_command(command, &mut sound) {
+                return 0;
+            }
+        }
+        // Mapped with the menu as each press arrives, as native does.
+        for (bit, button) in [(128, PaddleButton::Left), (256, PaddleButton::Right)] {
+            let Some(command) = (commands & bit != 0).then(|| self.menu.paddle_command(button)).flatten()
+            else {
+                continue;
+            };
+            if self.menu_command(command, &mut sound) {
+                return 0;
             }
         }
         if !paused && !self.menu.runs_console() {
