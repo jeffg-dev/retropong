@@ -28,19 +28,18 @@ export function selectGamepad(gamepads) {
   return candidates.find(isRetroController) || candidates[0] || null;
 }
 
-// Core advance() command bits for newly pressed buttons. A RetroController's
-// own buttons (HID Buttons 1/2, gamepad indices 0/1) are passed to the core's
-// menu as paddle-left/right; any other pad uses the standard mapping.
-export function padCommands(pad, pressed, menuOpen) {
-  if (pad.retro) return (pressed & 1 ? 128 : 0) | (pressed & 2 ? 256 : 0);
+// Core advance() command bits for newly pressed gamepad buttons. South and
+// East (a RetroController's left/right buttons) go to the core as select and
+// next, which the menu maps as each press arrives.
+export function padCommands(pressed) {
   let commands = 0;
   if (pressed & (1 << 9)) commands |= 1;
-  if (pressed & (1 << 1)) commands |= 2;
   if (pressed & (1 << 12)) commands |= 4;
   if (pressed & (1 << 13)) commands |= 8;
   if (pressed & (1 << 14)) commands |= 16;
   if (pressed & (1 << 15)) commands |= 32;
-  if (pressed & 1 && menuOpen) commands |= 64;
+  if (pressed & 1) commands |= 128;
+  if (pressed & 2) commands |= 256;
   return commands;
 }
 
@@ -183,7 +182,6 @@ export class ControllerInput {
           left: axisPosition(pad.axes[0]),
           right: axisPosition(pad.axes[1]),
           id: `gamepad:${pad.index ?? 0}:${pad.id}`,
-          retro: isRetroController(pad),
           buttons: Array.from(pad.buttons || []).reduce(
             (bits, button, index) =>
               index < 31 && (button.pressed || button.value > 0.5)
@@ -196,7 +194,6 @@ export class ControllerInput {
         ? {
             ...this.hidState,
             id: `hid:${this.device.productName || "RetroController"}`,
-            retro: true,
           }
         : null;
     if (state && this.activeId !== state.id) {

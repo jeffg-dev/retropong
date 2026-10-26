@@ -1,8 +1,8 @@
 //! WebAssembly bridge using the native simulation, menu, font and scheduler.
 //! `init(1..=4)` powers on in attract mode. `advance(dt,left,right,commands)`
 //! processes one rendered frame: commands are toggle=1, back=2, up=4, down=8,
-//! left=16, right=32, activate=64, and the RetroController's own buttons
-//! paddle-left=128, paddle-right=256 (mapped by the menu). Returns the last native speaker event:
+//! left=16, right=32, activate=64, and the gamepad South/East buttons
+//! select=128, next=256 (mapped by the menu). Returns the last native speaker event:
 //! bounce=1, point=2, serve=4, attract=8, or zero for silence/no new event.
 //! `render()` returns opaque RGBA in exported memory; reacquire memory.buffer
 //! after calls that may grow memory. Pixels remain valid until init/render.
@@ -35,7 +35,7 @@ mod audio {
 
 use canvas::Canvas;
 use menu::screen::{Countdown, MenuView, Overlay};
-use menu::{Action, Command, Menu, PaddleButton};
+use menu::{Action, Command, Menu, MenuButton};
 use scheduler::Scheduler;
 use settings::{DisplayMode, Settings};
 
@@ -128,8 +128,8 @@ impl WebGame {
             }
         }
         // Mapped with the menu as each press arrives, as native does.
-        for (bit, button) in [(128, PaddleButton::Left), (256, PaddleButton::Right)] {
-            let Some(command) = (commands & bit != 0).then(|| self.menu.paddle_command(button)).flatten()
+        for (bit, button) in [(128, MenuButton::Select), (256, MenuButton::Next)] {
+            let Some(command) = (commands & bit != 0).then(|| self.menu.button_command(button)).flatten()
             else {
                 continue;
             };

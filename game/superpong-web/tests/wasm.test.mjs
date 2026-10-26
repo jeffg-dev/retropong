@@ -57,26 +57,26 @@ test(
 );
 
 test(
-  "built WASM maps RetroController buttons: left opens/activates, right cycles",
+  "built WASM maps gamepad South/East: select opens/activates, next cycles",
   options,
   async () => {
     const g = await game();
     g.advance(1 / 60, 0.5, 0.5, 64);
     const frame = g.frame_number();
     g.advance(0, 0.5, 0.5, 256);
-    assert.equal(g.menu_open(), 0, "right does nothing while closed");
+    assert.equal(g.menu_open(), 0, "next does nothing while closed");
     g.advance(0, 0.5, 0.5, 128);
-    assert.equal(g.menu_open(), 1, "left opens the menu");
+    assert.equal(g.menu_open(), 1, "select opens the menu");
     for (let i = 0; i < 8; i++) g.advance(0, 0.5, 0.5, 256);
     g.advance(0, 0.5, 0.5, 128);
     assert.equal(g.menu_open(), 0, "eight steps wrap back to RESUME");
     assert.equal(g.runs_console(), 0, "resuming counts down");
-    assert.equal(g.frame_number(), frame, "left never restarts the match");
+    assert.equal(g.frame_number(), frame, "select never restarts the match");
     g.advance(0, 0.5, 0.5, 128);
-    assert.equal(g.menu_open(), 1, "left reopens during the countdown");
+    assert.equal(g.menu_open(), 1, "select reopens during the countdown");
     for (let i = 0; i < 3; i++) g.advance(0, 0.5, 0.5, 256);
     g.advance(0, 0.5, 0.5, 128);
-    assert.equal(g.crt_enabled(), 0, "left acts on the selected CRT entry");
+    assert.equal(g.crt_enabled(), 0, "select acts on the selected CRT entry");
   },
 );
 

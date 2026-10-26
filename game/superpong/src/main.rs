@@ -24,7 +24,7 @@ use macroquad::prelude::*;
 use audio::{Sounds, Tone, DEFAULT_VOLUME, VOLUME_MAX};
 use demo::Demo;
 use input::InputManager;
-use menu::{Action, Command, Item, Menu};
+use menu::{Action, Command, Item, Menu, MenuButton};
 use render::{Renderer, DEFAULT_WINDOW};
 use routing::PreviewHold;
 use scheduler::{frame_dt, Scheduler};
@@ -218,7 +218,7 @@ async fn amain(cli: Cli) {
         let pressed = |key: KeyCode| {
             is_key_pressed(key) || (key == KeyCode::Escape && cli.resume_at == Some(frame_counter))
         };
-        let mut commands = routing::menu_commands(menu_open, pressed);
+        let commands = routing::menu_commands(menu_open, pressed);
         if cli.menu_at == Some(frame_counter) {
             menu.open_at(cli.menu_item);
         }
@@ -237,13 +237,12 @@ async fn amain(cli: Cli) {
         } else {
             input_manager.poll(&settings)
         };
-        commands.extend(input_manager.take_buttons().into_iter().filter_map(pad_command));
 
-        // Controller buttons mean what the menu makes them as each press
-        // arrives (SPEC §13.6), so they are mapped after the other commands.
-        let paddle_buttons = input_manager.take_paddle_buttons().into_iter().map(Err);
-        for next in commands.into_iter().map(Ok).chain(paddle_buttons) {
-            let Some(command) = next.map_or_else(|button| menu.paddle_command(button), Some) else {
+        // Pad buttons mean what the menu makes them as each press arrives
+        // (SPEC §13.6), so they are mapped after the keyboard commands.
+        let buttons = input_manager.take_buttons().into_iter().map(Err);
+        for next in commands.into_iter().map(Ok).chain(buttons) {
+            let Some(command) = next.map_or_else(|button| pad_command(&menu, button), Some) else {
                 continue;
             };
             match menu.command(command, &mut settings, &console.status()) {
@@ -313,14 +312,14 @@ async fn amain(cli: Cli) {
 /// navigates, South activates, East closes the menu and Start opens and
 /// closes it like `Esc`. The left stick is left out: on a RetroController
 /// seen as a gamepad it is the two knobs.
-fn pad_command(button: Button) -> Option<Command> {
+fn pad_command(menu: &Menu, button: Button) -> Option<Command> {
     Some(match button {
         Button::DPadUp => Command::Up,
         Button::DPadDown => Command::Down,
         Button::DPadLeft => Command::Left,
         Button::DPadRight => Command::Right,
-        Button::South => Command::Activate,
-        Button::East => Command::Back,
+        Button::South => return menu.button_command(MenuButton::Select),
+        Button::East => return menu.button_command(MenuButton::Next),
         Button::Start => Command::Toggle,
         _ => return None,
     })
@@ -389,14 +388,18 @@ mod tests {
 
     #[test]
     fn gamepad_buttons_drive_the_menu() {
-        assert_eq!(pad_command(Button::DPadUp), Some(Command::Up));
-        assert_eq!(pad_command(Button::DPadDown), Some(Command::Down));
-        assert_eq!(pad_command(Button::DPadLeft), Some(Command::Left));
-        assert_eq!(pad_command(Button::DPadRight), Some(Command::Right));
-        assert_eq!(pad_command(Button::South), Some(Command::Activate));
-        assert_eq!(pad_command(Button::East), Some(Command::Back));
-        assert_eq!(pad_command(Button::Start), Some(Command::Toggle));
-        assert_eq!(pad_command(Button::North), None);
+        let mut menu = Menu::new();
+        assert_eq!(pad_command(&menu, Button::South), Some(Command::Toggle), "south opens");
+        assert_eq!(pad_command(&menu, Button::East), None, "east does nothing while closed");
+        menu.open_at(Item::Resume);
+        assert_eq!(pad_command(&menu, Button::DPadUp), Some(Command::Up));
+        assert_eq!(pad_command(&menu, Button::DPadDown), Some(Command::Down));
+        assert_eq!(pad_command(&menu, Button::DPadLeft), Some(Command::Left));
+        assert_eq!(pad_command(&menu, Button::DPadRight), Some(Command::Right));
+        assert_eq!(pad_command(&menu, Button::South), Some(Command::Activate));
+        assert_eq!(pad_command(&menu, Button::East), Some(Command::Down));
+        assert_eq!(pad_command(&menu, Button::Start), Some(Command::Toggle));
+        assert_eq!(pad_command(&menu, Button::North), None);
     }
 
     #[test]

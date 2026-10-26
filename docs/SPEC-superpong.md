@@ -779,7 +779,7 @@ them; closing it before starting shows them again.
 | Arrow keys | Navigate/change settings only while the menu is open |
 
 Other keyboard shortcuts and keyboard paddle controls are removed. Gamepad
-menu controls remain: D-pad navigates, South activates, East closes, Start toggles.
+menu controls remain: D-pad navigates, Start toggles, South and East as in §13.6.
 Knobs remain centred if no controller is connected.
 
 ### 13.4 CLI flags
@@ -842,9 +842,9 @@ The program is called **RetroPong**: window title, `--help`, the menu's title an
 - **Margins**: the cursor is at X 4, the labels at X 11 and the values at X 94, so the widest value (`SUPER PONG`, ending at X 172) is as far from the right edge as the cursor is from the left.
 - A **Game Mode** change moves the console's Game Select switch at once, as `Console::select` (§11.2); a Select key press still buffered from before the pause is dropped.
 
-**Pause.** `Esc` (or a pad's Start) opens the menu at any time, over a game or over the light show. While it is open the console is not ticked at all (the light show stops too), the sound playing is cut off, and the `--demo` autopilot does nothing. Arrow keys only navigate the menu. `Esc`, Start, a pad's East or `RESUME` closes it.
+**Pause.** `Esc` (or a pad's Start) opens the menu at any time, over a game or over the light show. While it is open the console is not ticked at all (the light show stops too), the sound playing is cut off, and the `--demo` autopilot does nothing. Arrow keys only navigate the menu. `Esc`, Start or `RESUME` closes it.
 
-**Controller buttons.** A RetroController's optional buttons (HID Buttons 1/2, logical left/right) drive the menu alone. The left button opens the menu when it is closed (also during the countdown) and activates the entry under the cursor when it is open, like `Enter`, so it resumes through `RESUME` and never Starts the console. The right button moves the cursor down one entry, wrapping from `EXIT GAME` to `RESUME`, and does nothing while the menu is closed. Each press is mapped with the menu as that press arrives. They are not also read as generic gamepad buttons.
+**South and East.** A pad's South and East buttons (a RetroController's optional left/right buttons, HID Buttons 1/2, read as an ordinary gamepad) mean what the menu makes them. South opens the menu when it is closed (also during the countdown) and activates the entry under the cursor when it is open, like `Enter`, so it resumes through `RESUME` and never Starts the console. East moves the cursor down one entry, wrapping from `EXIT GAME` to `RESUME`, and does nothing while the menu is closed. Each press is mapped with the menu as that press arrives.
 
 **Start and Select while paused.** The console is paused while the menu is open and during the countdown, and then `Enter` are never a console Start (§13.3): in the menu they activate, in the countdown they do nothing, since a Start kept for the first tick after the pause would restart the match at 0-0. A Start still buffered when the menu opens (pressed on the same frame as `Esc`) is dropped, and so is `--auto-start` while paused. A game mode is selected through the menu.
 

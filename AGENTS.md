@@ -74,9 +74,10 @@ palette and shader. Enter starts/restarts or activates a menu item, Escape toggl
 the menu, and arrows navigate. Paddle keyboard controls are intentionally absent.
 Startup hints disappear after the first start. Countdown keeps the simulation
 frozen but previews live knob positions. Never let the Enter that resumes also
-restart the match. The controller's left button opens the menu/activates (like
-Enter in the menu, never a Start); the right button steps down and wraps. Both
-games map them through `Menu::paddle_command`, not as generic gamepad buttons.
+restart the match. The controller's buttons are plain gamepad buttons (HID
+Buttons 1/2: South/East); the games give them menu meaning. South opens the
+menu/activates (like Enter in the menu, never a Start); East steps down and
+wraps. Both games map them through `Menu::button_command`.
 
 The web connection screen is static: only a large native RETROPONG banner and
 CONNECT CONTROLLER / & TURN KNOB, with no scores, paddles or animated background.

@@ -163,7 +163,7 @@ function frame(now) {
   if (state === "playing" && pad) {
     const pressed = pad.buttons & ~previousButtons;
     previousButtons = pad.buttons;
-    commands |= padCommands(pad, pressed, core.menu_open());
+    commands |= padCommands(pressed);
     const running = core.runs_console();
     const sound = core.advance(delta, pad.left, pad.right, commands);
     commands = 0;

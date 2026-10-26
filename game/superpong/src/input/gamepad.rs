@@ -33,8 +33,8 @@ impl GamepadSource {
     }
 
     /// The buttons pressed on any gamepad since the last call, oldest first.
-    /// A RetroController's own buttons are left out: they mean something
-    /// else (see [`crate::menu::PaddleButton`]) and arrive over hidapi.
+    /// A RetroController's own buttons arrive here too, as South and East,
+    /// even while hidapi reads its knobs.
     pub fn take_pressed(&mut self) -> Vec<Button> {
         std::mem::take(&mut self.pressed)
     }
@@ -48,10 +48,7 @@ impl GamepadSource {
         let gilrs = self.gilrs.as_mut()?;
         while let Some(event) = gilrs.next_event() {
             if let EventType::ButtonPressed(button, _) = event.event {
-                let pad = gilrs.gamepad(event.id);
-                if pad.vendor_id() != Some(VID) || pad.product_id() != Some(PID) {
-                    self.pressed.push(button);
-                }
+                self.pressed.push(button);
             }
         }
 

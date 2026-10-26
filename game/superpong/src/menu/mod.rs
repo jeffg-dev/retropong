@@ -88,12 +88,12 @@ pub enum Command {
     Activate,
 }
 
-/// One of a RetroController's optional momentary buttons (HID Buttons 1/2),
-/// in logical player order.
+/// A gamepad face button whose meaning depends on the menu (South and East:
+/// a RetroController's left and right buttons, HID Buttons 1/2).
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
-pub enum PaddleButton {
-    Left,
-    Right,
+pub enum MenuButton {
+    Select,
+    Next,
 }
 
 /// What the menu asks of the main loop.
@@ -175,16 +175,16 @@ impl Menu {
         }
     }
 
-    /// The command a controller button gives with the menu as it is now:
-    /// Left opens the menu, then activates the entry under the cursor;
-    /// Right steps the cursor down, wrapping from the last entry to the
+    /// The command a gamepad button gives with the menu as it is now:
+    /// Select opens the menu, then activates the entry under the cursor;
+    /// Next steps the cursor down, wrapping from the last entry to the
     /// first, and does nothing while the menu is closed.
-    pub fn paddle_command(&self, button: PaddleButton) -> Option<Command> {
+    pub fn button_command(&self, button: MenuButton) -> Option<Command> {
         match (button, self.is_open()) {
-            (PaddleButton::Left, false) => Some(Command::Toggle),
-            (PaddleButton::Left, true) => Some(Command::Activate),
-            (PaddleButton::Right, true) => Some(Command::Down),
-            (PaddleButton::Right, false) => None,
+            (MenuButton::Select, false) => Some(Command::Toggle),
+            (MenuButton::Select, true) => Some(Command::Activate),
+            (MenuButton::Next, true) => Some(Command::Down),
+            (MenuButton::Next, false) => None,
         }
     }
 
@@ -380,38 +380,38 @@ mod tests {
     }
 
     #[test]
-    fn paddle_buttons_open_activate_and_cycle() {
+    fn select_and_next_open_activate_and_cycle() {
         let (mut menu, mut settings) = (Menu::new(), Settings::default());
         let status = in_game(GameKind::Pong);
         let press = |menu: &mut Menu, settings: &mut Settings, button| {
-            let command = menu.paddle_command(button)?;
+            let command = menu.button_command(button)?;
             Some(menu.command(command, settings, &status))
         };
         assert_eq!(
-            press(&mut menu, &mut settings, PaddleButton::Right),
+            press(&mut menu, &mut settings, MenuButton::Next),
             None,
-            "right does nothing while closed"
+            "next does nothing while closed"
         );
         assert_eq!(menu.state(), State::Closed);
-        press(&mut menu, &mut settings, PaddleButton::Left);
-        assert!(menu.is_open() && menu.cursor() == Item::Resume, "left opens on Resume");
+        press(&mut menu, &mut settings, MenuButton::Select);
+        assert!(menu.is_open() && menu.cursor() == Item::Resume, "select opens on Resume");
         for want in Item::ALL[1..].iter().chain([&Item::Resume]) {
-            press(&mut menu, &mut settings, PaddleButton::Right);
-            assert_eq!(menu.cursor(), *want, "right steps down and wraps to the top");
+            press(&mut menu, &mut settings, MenuButton::Next);
+            assert_eq!(menu.cursor(), *want, "next steps down and wraps to the top");
         }
-        press(&mut menu, &mut settings, PaddleButton::Right);
-        press(&mut menu, &mut settings, PaddleButton::Right);
+        press(&mut menu, &mut settings, MenuButton::Next);
+        press(&mut menu, &mut settings, MenuButton::Next);
         let before = settings.color;
-        press(&mut menu, &mut settings, PaddleButton::Left);
+        press(&mut menu, &mut settings, MenuButton::Select);
         assert_eq!(menu.cursor(), Item::Color);
-        assert_ne!(settings.color, before, "left acts on the entry under the cursor");
+        assert_ne!(settings.color, before, "select acts on the entry under the cursor");
         while menu.cursor() != Item::Resume {
-            press(&mut menu, &mut settings, PaddleButton::Right);
+            press(&mut menu, &mut settings, MenuButton::Next);
         }
-        press(&mut menu, &mut settings, PaddleButton::Left);
-        assert!(matches!(menu.state(), State::Countdown { .. }), "left on Resume resumes");
-        press(&mut menu, &mut settings, PaddleButton::Left);
-        assert!(menu.is_open(), "left during the countdown opens the menu again");
+        press(&mut menu, &mut settings, MenuButton::Select);
+        assert!(matches!(menu.state(), State::Countdown { .. }), "select on Resume resumes");
+        press(&mut menu, &mut settings, MenuButton::Select);
+        assert!(menu.is_open(), "select during the countdown opens the menu again");
     }
 
     #[test]
