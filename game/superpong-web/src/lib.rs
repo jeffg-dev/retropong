@@ -1,6 +1,6 @@
 //! WebAssembly bridge using the native simulation, menu, font and scheduler.
 //! `init(1..=4)` powers on in attract mode. `advance(dt,left,right,commands)`
-//! processes one rendered frame: commands are toggle=1, back=2, up=4, down=8,
+//! processes one rendered frame: commands are toggle=1, up=4, down=8,
 //! left=16, right=32, activate=64, and the gamepad South/East buttons
 //! select=128, next=256 (mapped by the menu). Returns the last native speaker event:
 //! bounce=1, point=2, serve=4, attract=8, or zero for silence/no new event.
@@ -128,14 +128,13 @@ impl WebGame {
         let mut sound = 0;
         for (bit, command) in [
             (1, Command::Toggle),
-            (2, Command::Back),
             (4, Command::Up),
             (8, Command::Down),
             (16, Command::Left),
             (32, Command::Right),
             (64, Command::Activate),
         ] {
-            if commands & bit == 0 || (bit > 2 && !was_open) {
+            if commands & bit == 0 || (bit > 1 && !was_open) {
                 continue;
             }
             if self.menu_command(command, &mut sound) {

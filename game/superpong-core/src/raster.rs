@@ -165,22 +165,21 @@ mod tests {
 
     #[test]
     fn glyphs_match_the_data_file() {
-        let mut seen = [false; 10];
-        for line in DIGITS_JSON.lines() {
-            // Glyph lines look like `  "4": ["#..#", ..., "...#"],`.
-            let Some((key, rest)) = line.trim().split_once(": [") else { continue };
-            let Some(d) = key.trim_matches('"').parse::<usize>().ok().filter(|&d| d < 10) else {
-                continue;
-            };
-            let rows: Vec<&str> = rest.split('"').filter(|s| s.contains('#') || s.contains('.')).collect();
-            assert_eq!(rows.len(), 8, "digit {d}: {line}");
+        // Without whitespace each glyph reads `"4":["#..#",...,"...#"]`,
+        // however the file's arrays are laid out.
+        let compact: String = DIGITS_JSON.chars().filter(|c| !c.is_whitespace()).collect();
+        for (d, glyph) in GLYPHS.iter().enumerate() {
+            let key = format!("\"{d}\":[");
+            let start =
+                compact.find(&key).unwrap_or_else(|| panic!("digit {d} is in digits.json")) + key.len();
+            let list = &compact[start..start + compact[start..].find(']').expect("the glyph's list closes")];
+            let rows: Vec<&str> = list.split(',').map(|row| row.trim_matches('"')).collect();
+            assert_eq!(rows.len(), 8, "digit {d}: {list}");
             for (gr, row) in rows.iter().enumerate() {
                 let mask = row.chars().fold(0u8, |m, c| m << 1 | u8::from(c == '#'));
-                assert_eq!(GLYPHS[d][gr], mask, "digit {d}, grid row {gr}");
+                assert_eq!(glyph[gr], mask, "digit {d}, grid row {gr}");
             }
-            seen[d] = true;
         }
-        assert_eq!(seen, [true; 10], "every digit is in digits.json");
     }
 
     #[test]

@@ -78,8 +78,6 @@ pub enum Command {
     /// `Esc` or a gamepad's Start: opens the menu, closes it, and during
     /// the countdown opens it again.
     Toggle,
-    /// A gamepad's East button: closes the menu if it is open.
-    Back,
     Up,
     Down,
     Left,
@@ -198,7 +196,7 @@ impl Menu {
                 self.open_at(Item::Resume);
                 Action::None
             }
-            (State::Open, Command::Toggle | Command::Back) => {
+            (State::Open, Command::Toggle) => {
                 self.close(status);
                 Action::None
             }
@@ -234,7 +232,7 @@ impl Menu {
             Command::Left | Command::Right | Command::Activate => {
                 return self.change(command, settings, status);
             }
-            Command::Toggle | Command::Back => {}
+            Command::Toggle => {}
         }
         Action::None
     }
@@ -358,17 +356,6 @@ mod tests {
     }
 
     #[test]
-    fn back_closes_but_never_opens() {
-        let mut menu = Menu::new();
-        let status = attract(GameKind::Pong);
-        menu.command(Command::Back, &mut Settings::default(), &status);
-        assert_eq!(menu.state(), State::Closed);
-        let mut menu = open();
-        menu.command(Command::Back, &mut Settings::default(), &status);
-        assert_eq!(menu.state(), State::Closed);
-    }
-
-    #[test]
     fn navigation_is_ignored_while_closed() {
         let (mut menu, mut settings) = (Menu::new(), Settings::default());
         let before = (menu, settings.color, settings.display, settings.volume);
@@ -387,11 +374,7 @@ mod tests {
             let command = menu.button_command(button)?;
             Some(menu.command(command, settings, &status))
         };
-        assert_eq!(
-            press(&mut menu, &mut settings, MenuButton::Next),
-            None,
-            "next does nothing while closed"
-        );
+        assert_eq!(press(&mut menu, &mut settings, MenuButton::Next), None, "next does nothing while closed");
         assert_eq!(menu.state(), State::Closed);
         press(&mut menu, &mut settings, MenuButton::Select);
         assert!(menu.is_open() && menu.cursor() == Item::Resume, "select opens on Resume");
@@ -603,8 +586,8 @@ mod tests {
         menu.command(Command::Toggle, &mut Settings::default(), &status);
         menu.advance(0.75);
         assert_eq!(menu.countdown(), Some(2));
-        // Navigation and Back do nothing to a countdown...
-        for c in [Command::Down, Command::Activate, Command::Back] {
+        // Navigation does nothing to a countdown...
+        for c in [Command::Down, Command::Activate] {
             menu.command(c, &mut Settings::default(), &status);
             assert_eq!(menu.countdown(), Some(2), "{c:?}");
         }
