@@ -55,4 +55,5 @@ make run
 ```
 
 Or follow the [web app setup](game/superpong-web/README.md).
-**Enter** starts a game; **Esc** opens the menu. Turn the knobs to move the paddles.
+**Enter** starts a game; **Esc** opens the menu. On a phone or tablet, tap to
+start and hold for the menu. Turn the knobs to move the paddles.

@@ -4,6 +4,8 @@
 //! left=16, right=32, activate=64, and the gamepad South/East buttons
 //! select=128, next=256 (mapped by the menu). Returns the last native speaker event:
 //! bounce=1, point=2, serve=4, attract=8, or zero for silence/no new event.
+//! `tap(x,y)` (fractions of the canvas) is handled by the next `advance`;
+//! `set_touch_hints(1)` words the launch hints for a touchscreen.
 //! `render()` returns opaque RGBA in exported memory; reacquire memory.buffer
 //! after calls that may grow memory. Pixels remain valid until init/render.
 
@@ -21,6 +23,7 @@ mod menu;
 mod scheduler;
 #[path = "../../superpong/src/settings.rs"]
 mod settings;
+mod touch;
 
 // The native settings/menu only need the volume scale, not its audio device.
 // This is the same scale/gain as superpong/src/audio.rs.
@@ -34,7 +37,7 @@ mod audio {
 }
 
 use canvas::Canvas;
-use menu::screen::{Countdown, MenuView, Overlay};
+use menu::screen::{draw_launch, Countdown, MenuView, Overlay};
 use menu::{Action, Command, Menu, MenuButton};
 use scheduler::Scheduler;
 use settings::{DisplayMode, Settings};
@@ -53,6 +56,9 @@ struct WebGame {
     preview_held: bool,
     knobs: (f32, f32),
     exit: bool,
+    /// Clock and line of a tap waiting for the next `advance`.
+    tap: Option<(i32, i32)>,
+    touch_hints: bool,
 }
 
 fn game_kind(number: u32) -> GameKind {
@@ -75,10 +81,13 @@ impl WebGame {
             preview_held: false,
             knobs: (0.5, 0.5),
             exit: false,
+            tap: None,
+            touch_hints: false,
         }
     }
 
     fn pause(&mut self) {
+        self.tap = None;
         if !self.menu.is_open() {
             self.menu.open_at(menu::Item::Resume);
             self.scheduler.pause(&mut self.console);
@@ -102,10 +111,16 @@ impl WebGame {
 
     // Same ordering as native main: sample pause state, buffer Start, handle
     // menu actions, advance countdown, run ticks, choose live paddle preview.
-    fn advance(&mut self, dt: f32, left: f32, right: f32, commands: u32) -> u32 {
+    fn advance(&mut self, dt: f32, left: f32, right: f32, mut commands: u32) -> u32 {
         let dt = if dt.is_finite() { scheduler::frame_dt(false, dt.max(0.0)) } else { 0.0 };
         let was_open = self.menu.is_open();
         let paused = !self.menu.runs_console();
+        let tap = self.tap.take();
+        // A tap on the closed menu is Enter over the light show and Esc
+        // otherwise: it pauses a match and never restarts one.
+        if tap.is_some() && !was_open {
+            commands |= if !paused && self.console.phase() == Phase::Attract { 64 } else { 1 };
+        }
         if !paused && commands & 64 != 0 {
             self.scheduler.press_start();
         }
@@ -135,6 +150,15 @@ impl WebGame {
             };
             if self.menu_command(command, &mut sound) {
                 return 0;
+            }
+        }
+        // A tap on the open menu, found from the cursor the keys left.
+        if let Some((x, row)) = tap.filter(|_| was_open) {
+            let game = self.console.kind();
+            for command in touch::menu_commands(x, row, &self.menu, &self.settings, game) {
+                if self.menu_command(command, &mut sound) {
+                    return 0;
+                }
             }
         }
         if !paused && !self.menu.runs_console() {
@@ -202,8 +226,18 @@ impl WebGame {
             None if self.first_launch => Overlay::Launch,
             None => Overlay::None,
         };
-        overlay.draw(&mut self.canvas);
+        match overlay {
+            // The native hints in their place, worded for a touchscreen.
+            Overlay::Launch if self.touch_hints => draw_launch(&mut self.canvas, touch::TOUCH_HINTS),
+            _ => overlay.draw(&mut self.canvas),
+        }
         self.encode_rgba()
+    }
+
+    #[cfg(test)]
+    fn settings_bits(&self) -> (bool, DisplayMode, u8, bool, bool, GameKind) {
+        let s = &self.settings;
+        (s.color, s.display, s.volume, s.invert_left, s.invert_right, self.console.kind())
     }
 
     fn encode_rgba(&mut self) -> *const u8 {
@@ -336,7 +370,27 @@ pub extern "C" fn restore_settings(value: u32) -> u32 {
 
 #[no_mangle]
 pub extern "C" fn init(game: u32) {
-    GAME.with(|s| *s.borrow_mut() = WebGame::new(game));
+    // The hints follow the browser's input, not the match.
+    GAME.with(|s| {
+        let mut g = s.borrow_mut();
+        *g = WebGame { touch_hints: g.touch_hints, ..WebGame::new(game) };
+    });
+}
+/// A tap at `(x, y)`, fractions of the canvas from its top left, for the
+/// next `advance`. Non-finite positions are ignored.
+#[no_mangle]
+pub extern "C" fn tap(x: f32, y: f32) {
+    GAME.with(|s| {
+        let mut g = s.borrow_mut();
+        let crt = g.settings.display == DisplayMode::Crt;
+        if let Some(at) = touch::raster(x, y, crt) {
+            g.tap = Some(at);
+        }
+    });
+}
+#[no_mangle]
+pub extern "C" fn set_touch_hints(on: u32) {
+    GAME.with(|s| s.borrow_mut().touch_hints = on != 0);
 }
 #[no_mangle]
 pub extern "C" fn advance(dt: f32, left: f32, right: f32, commands: u32) -> u32 {
@@ -580,5 +634,106 @@ mod tests {
         advance(0.0, 0.5, 0.5, 8); // exit
         advance(0.0, 0.5, 0.5, 64);
         assert_eq!(exit_requested(), 1);
+    }
+
+    /// A tap on the middle of the screen, or on `item`'s line, then a frame.
+    fn tap_at(web: &mut WebGame, at: Option<menu::Item>, dt: f32) {
+        web.tap = Some(at.map_or((88, 120), |item| (20, menu::screen::item_row(item) + 7)));
+        web.advance(dt, 0.5, 0.5, 0);
+    }
+
+    #[test]
+    fn a_tap_starts_over_the_light_show_and_pauses_a_match_without_restarting_it() {
+        use menu::Item;
+        let mut web = WebGame::new(3);
+        tap_at(&mut web, None, 0.02);
+        assert_eq!(web.console.phase(), Phase::Waiting, "a tap starts, as Enter does");
+        while web.console.phase() != Phase::Rally {
+            web.advance(1.0 / 60.0, 0.5, 0.5, 0);
+        }
+        let rally = web.console.status();
+        tap_at(&mut web, None, 1.0 / 60.0);
+        assert!(web.menu.is_open(), "a tap during a match opens the menu");
+        assert_eq!(web.console.status(), rally, "and pauses it at once");
+        for _ in 0..30 {
+            tap_at(&mut web, Some(Item::Color), 1.0 / 60.0);
+        }
+        assert_eq!(web.menu.cursor(), Item::Color);
+        assert!(web.settings.color, "thirty taps toggle back to colour");
+        tap_at(&mut web, Some(Item::Resume), 0.0);
+        assert_eq!(web.menu.countdown(), Some(3));
+        tap_at(&mut web, None, 0.2);
+        assert!(web.menu.is_open(), "a tap during the countdown opens the menu again");
+        tap_at(&mut web, Some(Item::Resume), 0.0);
+        while !web.menu.runs_console() {
+            web.advance(1.0 / 60.0, 0.5, 0.5, 0);
+        }
+        assert_eq!(web.console.status(), rally, "nothing ran during the pause");
+        for _ in 0..3 {
+            web.advance(1.0 / 60.0, 0.5, 0.5, 0);
+        }
+        let after = web.console.status();
+        assert!(after.frame > rally.frame);
+        assert_eq!(
+            (after.phase, after.left_score, after.right_score),
+            (Phase::Rally, 0, 0),
+            "the same rally"
+        );
+    }
+
+    #[test]
+    fn a_tap_on_the_title_or_off_the_picture_changes_nothing() {
+        let mut web = WebGame::new(3);
+        web.pause();
+        let before = (web.menu, web.settings_bits());
+        for at in [(88, 25), (88, 215), (-6, -8)] {
+            web.tap = Some(at);
+            web.advance(0.0, 0.5, 0.5, 0);
+            assert_eq!((web.menu, web.settings_bits()), before, "{at:?}");
+        }
+        // Non-finite positions from the page are not taps at all.
+        init(3);
+        tap(f32::NAN, 0.5);
+        advance(0.02, 0.5, 0.5, 0);
+        assert_eq!(phase(), 0);
+    }
+
+    #[test]
+    fn exported_taps_land_where_the_crt_curve_shows_the_menu() {
+        // Near the bottom left corner, the line above Exit Game on the flat
+        // picture shows Exit Game itself on the curved one.
+        let row = menu::screen::item_row(menu::Item::Exit) - 2;
+        let y = (row - superpong_core::DISPLAY_ROW0) as f32 / DISPLAY_H as f32 + 0.001;
+        for crt in [false, true] {
+            init(3);
+            GAME.with(|s| {
+                s.borrow_mut().settings.display = if crt { DisplayMode::Crt } else { DisplayMode::Pixel }
+            });
+            pause();
+            tap(0.02, y);
+            advance(0.0, 0.5, 0.5, 0);
+            let toggled = GAME.with(|s| s.borrow().settings.invert_right) != Settings::default().invert_right;
+            assert_eq!((exit_requested() == 1, toggled), (crt, !crt), "exit or RIGHT, crt {crt}");
+        }
+    }
+
+    #[test]
+    fn touch_hints_replace_the_keys_in_the_native_launch_panel() {
+        let mut web = WebGame::new(3);
+        web.render();
+        let keys = web.canvas.clone();
+        web.touch_hints = true;
+        web.render();
+        let mut expected = keys.clone();
+        menu::screen::draw_launch(&mut expected, touch::TOUCH_HINTS);
+        assert_eq!(web.canvas, expected);
+        assert_ne!(web.canvas, keys);
+        // A replay powers on again with the same hints.
+        set_touch_hints(1);
+        init(2);
+        GAME.with(|s| assert!(s.borrow().touch_hints));
+        set_touch_hints(0);
+        init(2);
+        GAME.with(|s| assert!(!s.borrow().touch_hints));
     }
 }

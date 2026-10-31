@@ -79,6 +79,10 @@ Buttons 1/2: South/East); the games give them menu meaning. South opens the
 menu/activates (like Enter in the menu, never a Start); East steps down and
 wraps. Both games map them through `Menu::button_command`.
 
+On touchscreens the web canvas maps taps to the same commands (`touch.rs`):
+Enter over the light show, Esc during a match or countdown, and menu entries by
+their drawn position; a hold is Esc. A tap must never restart a match.
+
 The web connection screen is static: only a large native RETROPONG banner and
 CONNECT CONTROLLER / & TURN KNOB, with no scores, paddles or animated background.
 The connection screen also has a prominent GitHub source link, hidden during play.

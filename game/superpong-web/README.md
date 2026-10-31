@@ -26,9 +26,19 @@ and right buttons are its South and East. Both knobs retain the same direction a
 controller's native HID readings. Disconnecting pauses play; reconnecting returns
 to the native menu so you can resume with the usual countdown.
 
+On a touchscreen (a phone or tablet with the controller plugged in), tap the
+game to start and hold it for half a second to open or close the menu. During a
+match or its countdown a tap opens the menu instead, so a tap never restarts a
+match. In the menu, tap an entry to change it, as Enter would; tap a number on
+the Game Mode slider for that game, or a volume block for that level. Tapping
+the top lit block lowers the volume one step, so a block tapped twice can reach
+silence. The launch hints read TAP TO START and HOLD FOR MENU after a touch, or
+on a device whose main pointer is touch, and return to the keys after a key
+press. Mouse clicks keep their behaviour.
+
 The page never requests or exits fullscreen and does not capture the keyboard.
-Use the browser's own window/fullscreen controls. Click the game or press Enter
-to unlock sound. On browsers that reserve Escape in browser-managed fullscreen,
+Use the browser's own window/fullscreen controls. Click or tap the game, or press
+Enter, to unlock sound. On browsers that reserve Escape in browser-managed fullscreen,
 the browser controls that key.
 
 The connection screen is static, with larger native RETROPONG lettering and two

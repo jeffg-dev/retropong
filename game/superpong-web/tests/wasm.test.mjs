@@ -81,6 +81,36 @@ test(
 );
 
 test(
+  "built WASM maps taps: start, pause without restart, menu entries by place",
+  options,
+  async () => {
+    const g = await game();
+    // Pixel display, so a tap's line is the canvas fraction of 240 lines.
+    assert.equal(g.restore_settings(3 | (8 << 3) | 128 | 512 | 1024), 1);
+    const entry = (row) => [0.2, (row + 8 + 7) / 240];
+    g.tap(0.5, 0.5);
+    g.advance(1 / 60, 0.5, 0.5, 0);
+    assert.equal(g.phase(), 1, "a tap over the light show starts");
+    while (g.phase() !== 2) g.advance(1 / 60, 0.5, 0.5, 0);
+    const frame = g.frame_number();
+    g.tap(0.5, 0.5);
+    g.advance(1 / 60, 0.5, 0.5, 0);
+    assert.equal(g.menu_open(), 1, "a tap during a rally opens the menu");
+    assert.equal(g.frame_number(), frame);
+    g.tap(...entry(124));
+    g.advance(0, 0.5, 0.5, 0);
+    assert.equal(g.crt_enabled(), 1, "a tap on CRT turns it on");
+    g.tap(...entry(39));
+    g.advance(0, 0.5, 0.5, 0);
+    assert.equal(g.menu_open(), 0, "a tap on RESUME resumes");
+    while (!g.runs_console()) g.advance(1 / 60, 0.5, 0.5, 0);
+    for (let i = 0; i < 3; i++) g.advance(1 / 60, 0.5, 0.5, 0);
+    assert.ok(g.frame_number() > frame);
+    assert.equal(g.phase(), 2, "the same rally goes on: no restart");
+  },
+);
+
+test(
   "built WASM native menu changes CRT and Exit Game signals the host",
   options,
   async () => {

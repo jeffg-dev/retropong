@@ -2,6 +2,7 @@ import { ControllerInput, padCommands } from "./controller.js";
 import { AudioPlayer } from "./audio.js";
 import { createRenderer } from "./renderer.js";
 import { SettingsStore } from "./settings.js";
+import { TouchGestures } from "./touch.js";
 
 const settings = new SettingsStore();
 
@@ -16,6 +17,8 @@ let initialized = false,
   exited = false,
   exitKnobs = null;
 let state = "waiting";
+// Launch hints name the input last used: touch, else the keyboard.
+let touchHints = Boolean(globalThis.matchMedia?.("(pointer: coarse)").matches);
 
 function setState(value) {
   state = value;
@@ -23,7 +26,7 @@ function setState(value) {
   canvas.setAttribute(
     "aria-label",
     value === "playing"
-      ? "RetroPong. Enter to start. Escape for menu. Arrow keys navigate, Enter selects."
+      ? "RetroPong. Enter or tap to start. Escape or hold for menu. Arrow keys navigate, Enter selects; tap a menu entry to change it."
       : "RETROPONG. CONNECT CONTROLLER & TURN KNOB",
   );
 }
@@ -39,6 +42,10 @@ function pause() {
 function report(error) {
   console.error("RetroPong:", error);
 }
+function setTouchHints(on) {
+  touchHints = on;
+  core?.set_touch_hints(+on);
+}
 
 async function loadGame() {
   if (core) return;
@@ -53,6 +60,7 @@ async function loadGame() {
       );
       renderer ||= await createRenderer(canvas);
       core = instance.exports;
+      core.set_touch_hints(+touchHints);
       settings.init(core);
     })().catch((error) => {
       loading = null;
@@ -104,6 +112,20 @@ canvas.addEventListener("click", () => {
   if (state === "playing") void audio.unlock();
   else connect();
 });
+// While playing, a tap is Enter or Esc, or a menu entry; a hold is Esc.
+new TouchGestures(canvas, {
+  enabled: () => state === "playing" && Boolean(core),
+  onTouch: () => {
+    if (!touchHints) setTouchHints(true);
+  },
+  onTap: (x, y) => {
+    void audio.unlock();
+    core.tap(x, y);
+  },
+  onHold: () => {
+    commands |= 1;
+  },
+});
 const keyCommands = {
   Escape: 1,
   ArrowUp: 4,
@@ -117,6 +139,7 @@ document.addEventListener("keydown", (event) => {
     if (keyCommands[event.key]) event.preventDefault();
     return;
   }
+  if (touchHints) setTouchHints(false);
   if (state !== "playing") {
     if (event.key === "Enter") {
       event.preventDefault();

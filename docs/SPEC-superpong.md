@@ -782,6 +782,14 @@ Other keyboard shortcuts and keyboard paddle controls are removed. Gamepad
 menu controls remain: D-pad navigates, Start toggles, South and East as in §13.6.
 Knobs remain centred if no controller is connected.
 
+The web build also takes touch on the picture. A tap is `Enter` over the light
+show and `Esc` during a match or countdown, so it never restarts a match. A
+half-second hold is `Esc`. With the menu open, a tap on an entry moves the
+cursor there and changes it: Game Mode's slider takes the nearest number, its
+name steps on; a volume block sets its level, and the top lit block steps down
+one; the Volume label only moves the cursor. Taps are placed through the CRT
+warp. After a touch the hints read `TAP TO START` and `HOLD FOR MENU`.
+
 ### 13.4 CLI flags
 
 | Flag | Effect |

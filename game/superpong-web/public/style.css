@@ -23,6 +23,12 @@ body {
   height: min(75vw, 100svh);
   image-rendering: pixelated;
   outline: none;
+  /* Taps and holds belong to the game, not to scrolling, zoom or selection. */
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
 }
 #console[data-state="playing"] {
   cursor: none;

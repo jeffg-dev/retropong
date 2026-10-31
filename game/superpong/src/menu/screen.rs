@@ -27,7 +27,7 @@ const TEXT: Scale = Scale { w: 2, h: 3 };
 /// Font pixel of the title: 3 clocks by 4 lines.
 const TITLE: Scale = Scale { w: 3, h: 4 };
 /// Height of a line of entry text.
-const TEXT_H: i32 = GLYPH_ROWS as i32 * TEXT.h;
+pub const TEXT_H: i32 = GLYPH_ROWS as i32 * TEXT.h;
 
 /// The title, and the top row of its letters.
 pub const TITLE_TEXT: &str = "RETROPONG";
@@ -38,7 +38,7 @@ const TITLE_ROW: i32 = 17;
 /// from the left one.
 const CURSOR_X: i32 = 4;
 const LABEL_X: i32 = 11;
-const VALUE_X: i32 = 94;
+pub const VALUE_X: i32 = 94;
 
 /// Top row of each entry's text, in [`Item::ALL`] order. Game Mode takes
 /// three lines of the menu: the game's name, the slider and its numbers.
@@ -51,11 +51,11 @@ const KNOB_ROWS: (i32, i32) = (18, 18 + PADDLE_H);
 const TRACK_ROWS: (i32, i32) = (24, 27);
 const NUMBER_ROW: i32 = 36;
 /// Clocks between the switch positions' numbers.
-const STOP_PITCH: i32 = 24;
+pub const STOP_PITCH: i32 = 24;
 
 /// Volume blocks: paddle-wide, this many clocks apart. An unlit block is
 /// only its bottom font pixel, a floor marking the step.
-const VOLUME_PITCH: i32 = 7;
+pub const VOLUME_PITCH: i32 = 7;
 
 /// Large countdown score cells: twice the normal digit width and 1.5x its height.
 const COUNT_CELL: (i32, i32) = (8, 12);
@@ -102,23 +102,29 @@ impl Overlay {
     pub fn draw(&self, canvas: &mut Canvas) {
         match *self {
             Overlay::None => {}
-            Overlay::Launch => {
-                // Match the menu's chunky lettering, with a single clear panel
-                // so the moving light show cannot break up the two hints.
-                canvas.fill(8..FIELD_W - 8, 112..175, Cell::Background);
-                for (text, row) in [("PRESS ENTER TO START", 120), ("PRESS ESC FOR MENU", 152)] {
-                    let span = centred(text, FIELD_W / 2, TEXT);
-                    draw_text(canvas, text, span.start, row, TEXT);
-                }
-            }
+            Overlay::Launch => draw_launch(canvas, LAUNCH_HINTS),
             Overlay::Menu(view) => draw_menu(canvas, &view),
             Overlay::Countdown(countdown) => draw_countdown(canvas, &countdown),
         }
     }
 }
 
+/// The launch hints for a keyboard, top line first.
+pub const LAUNCH_HINTS: [&str; 2] = ["PRESS ENTER TO START", "PRESS ESC FOR MENU"];
+
+/// Two launch hints over the light show. They match the menu's chunky
+/// lettering, with a single clear panel so the moving light show cannot
+/// break them up.
+pub fn draw_launch(canvas: &mut Canvas, hints: [&str; 2]) {
+    canvas.fill(8..FIELD_W - 8, 112..175, Cell::Background);
+    for (text, row) in hints.into_iter().zip([120, 152]) {
+        let span = centred(text, FIELD_W / 2, TEXT);
+        draw_text(canvas, text, span.start, row, TEXT);
+    }
+}
+
 /// Top row of `item`'s text.
-fn item_row(item: Item) -> i32 {
+pub fn item_row(item: Item) -> i32 {
     ITEM_ROWS[item as usize]
 }
 
@@ -129,7 +135,7 @@ fn stop_x(number: u8) -> i32 {
 
 /// Centre X of the number's ink, which the knob sits over. The digit cell is
 /// 3 font pixels wide, but a `1` is only its right-hand column.
-fn stop_centre(number: u8) -> i32 {
+pub fn stop_centre(number: u8) -> i32 {
     stop_x(number) + if number == 1 { TEXT.w * 5 / 2 } else { TEXT.w * 3 / 2 }
 }
 
